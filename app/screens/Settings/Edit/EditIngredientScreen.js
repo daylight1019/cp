@@ -58,6 +58,7 @@ class EditIngredientScreen extends Component {
 
 
   async componentDidMount() {
+    this.setState({ isLoading: true })
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={this.onSave}>
@@ -70,7 +71,7 @@ class EditIngredientScreen extends Component {
     await this.props.fetchGetColor()
 
     this.ingredient = this.props.route.params.ingredient;
-    this.setState({ name: this.ingredient.name, coverage: this.ingredient.coverage, price: '' + this.ingredient.purchageprice })
+    this.setState({ name: this.ingredient.name, coverage: '' + this.ingredient.coverage, price: '' + this.ingredient.purchaseprice })
 
     var tempColorState = new Array(this.props.colorsInfo.length).fill(false)
     this.ingredient.color.map(x => {
@@ -85,12 +86,13 @@ class EditIngredientScreen extends Component {
     var tempPatternState = new Array(this.props.patternsInfo.length).fill(false)
     this.ingredient.pattern.map(x => {
       this.props.patternsInfo.map((y, i) => {
-        if (x.patternId == y.id) {
+        if (x.patternid == y.id) {
           tempPatternState[i] = true;
         }
       })
     })
     this.setState({ patternsState: tempPatternState })
+    this.setState({ isLoading: false })
   }
 
   onSave = () => {
@@ -98,7 +100,7 @@ class EditIngredientScreen extends Component {
       id: this.ingredient.id,
       name: this.state.name,
       coverage: this.state.coverage,
-      purchageprice: this.state.price,
+      purchaseprice: this.state.price,
       color: this.props.colorsInfo.filter((x, i) => this.state.colorsState[i] == true).reduce((t, p) => { t.push(p.id); return t; }, []),
       pattern: this.props.patternsInfo.filter((x, i) => this.state.patternsState[i] == true).reduce((t, p) => { t.push(p.id); return t; }, []),
     }
@@ -173,29 +175,35 @@ class EditIngredientScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <ScrollView style={{ flex: 1, backgroundColor: '#F5FCFF', }}>
+        {this.state.isLoading ?
           <View style={styles.container}>
-            <View style={{ marginTop: 10 }}>
-              <TextInput label='Name' onChangeText={text => this.setState({ name: text })} value={this.state.name} style={styles.textInput}></TextInput>
-            </View>
-            <View>
-              <TextInput label='Coverage Area sq/ft' onChangeText={text => this.setState({ coverage: text })} value={this.state.coverage} style={styles.textInput}></TextInput>
-            </View>
-            <View>
-              <TextInput label='Purchase Price' onChangeText={text => this.setState({ price: text })} value={this.state.price} style={styles.textInput}></TextInput>
-            </View>
-            <TouchableOpacity onPress={() => this.toggleColor()} style={{ ...styles.buttonView, backgroundColor: this.state.colorOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
-              {this.state.colorOpen ? <Icon name="minus-circle" style={{ margin: 8, height: 35 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8, height: 35 }} size={16} color="#ffffff" solid />}
-              <Text style={styles.buttonText}>Color ({this.ingredient != undefined ? this.ingredient.color.length : 0})</Text>
-            </TouchableOpacity>
-            {this._renderColor()}
-            <TouchableOpacity onPress={() => this.togglePattern()} style={{ ...styles.buttonView, backgroundColor: this.state.patternOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
-              {this.state.patternOpen ? <Icon name="minus-circle" style={{ margin: 8, height: 35 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8, height: 35 }} size={16} color="#ffffff" solid />}
-              <Text style={styles.buttonText}>Pattern ({this.ingredient != undefined ? this.ingredient.pattern.length : 0})</Text>
-            </TouchableOpacity>
-            {this._renderPattern()}
+
           </View>
-        </ScrollView>
+          :
+          <ScrollView style={{ flex: 1, backgroundColor: '#F5FCFF', }}>
+            <View style={styles.container}>
+              <View style={{ marginTop: 10 }}>
+                <TextInput label='Name' onChangeText={text => this.setState({ name: text })} value={this.state.name} style={styles.textInput}></TextInput>
+              </View>
+              <View>
+                <TextInput label='Coverage Area sq/ft' onChangeText={text => this.setState({ coverage: text })} value={this.state.coverage} style={styles.textInput}></TextInput>
+              </View>
+              <View>
+                <TextInput label='Purchase Price' onChangeText={text => this.setState({ price: text })} value={this.state.price} style={styles.textInput}></TextInput>
+              </View>
+              <TouchableOpacity onPress={() => this.toggleColor()} style={{ ...styles.buttonView, backgroundColor: this.state.colorOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
+                {this.state.colorOpen ? <Icon name="minus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid />}
+                <Text style={styles.buttonText}>Color ({this.ingredient != undefined ? this.ingredient.color.length : 0})</Text>
+              </TouchableOpacity>
+              {this._renderColor()}
+              <TouchableOpacity onPress={() => this.togglePattern()} style={{ ...styles.buttonView, backgroundColor: this.state.patternOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
+                {this.state.patternOpen ? <Icon name="minus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid />}
+                <Text style={styles.buttonText}>Pattern ({this.ingredient != undefined ? this.ingredient.pattern.length : 0})</Text>
+              </TouchableOpacity>
+              {this._renderPattern()}
+            </View>
+          </ScrollView>
+        }
       </SideMenu>
     )
   };
@@ -226,6 +234,7 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   buttonView: {
+    alignItems: 'center',
     width: Dimensions.get('window').width - 24,
     margin: 10,
     height: 35,

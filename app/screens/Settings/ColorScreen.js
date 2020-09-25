@@ -51,7 +51,8 @@ class ColorScreen extends Component {
     });
 
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ isLoading: true })
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewColor')} >
@@ -66,7 +67,8 @@ class ColorScreen extends Component {
         </TouchableOpacity>
       )
     });
-    this.props.fetchGetColor();
+    await this.props.fetchGetColor();
+    this.setState({ isLoading: false })
   }
 
   render() {
@@ -80,29 +82,35 @@ class ColorScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <View style={styles.container}>
-          <TextInput style={styles.searchText} onChangeText={text => this.setState({ searchText: text })} label="Input Search Colors"></TextInput>
-          <ScrollView>  
-            {(this.props.colorsInfo.length > 0) && (
-              this.props.colorsInfo.map((color, index) => (
-                (color.name.indexOf(this.state.searchText) != -1) && (
-                  <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
-                    <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
-                      <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('EditColor', { color })}>
-                        <View style={{ width: Dimensions.get('window').width - 65 }}>
-                          <Text style={{ fontSize: 14 }}>{color.name}</Text>
-                        </View>
-                        <View style={{ alignSelf: 'flex-end' }}>
-                          <Icon style={{ marginTop: 3 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </View>)
-              ))
-            )}
-            <View style={{ height: 5 }}></View>
-          </ScrollView>
-        </View>
+        {this.state.isLoading ?
+          <View style={styles.container}>
+
+          </View>
+          :
+          <View style={styles.container}>
+            <TextInput style={styles.searchText} onChangeText={text => this.setState({ searchText: text })} label="Input Search Colors"></TextInput>
+            <ScrollView>
+              {(this.props.colorsInfo.length > 0) && (
+                this.props.colorsInfo.map((color, index) => (
+                  (color.name.indexOf(this.state.searchText) != -1) && (
+                    <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
+                      <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
+                        <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('EditColor', { color })}>
+                          <View style={{ width: Dimensions.get('window').width - 65 }}>
+                            <Text style={{ fontSize: 14 }}>{color.name}</Text>
+                          </View>
+                          <View style={{ alignSelf: 'flex-end' }}>
+                            <Icon style={{ marginTop: 3 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>)
+                ))
+              )}
+              <View style={{ height: 5 }}></View>
+            </ScrollView>
+          </View>
+        }
       </SideMenu>
     )
   };

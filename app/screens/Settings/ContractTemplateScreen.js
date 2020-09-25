@@ -50,14 +50,6 @@ export default class ContractTemplateScreen extends Component{
 
   componentDidMount() {
     this.props.navigation.setOptions({
-			headerRight: (props)=> (
-				<TouchableOpacity activeOpacity = { .5 } onPress={ () => this.props.navigation.navigate('NewContractTemplate') }>
-					<Image {...props}
-					source = {require('../../assets/plus.png')}
-					style = {styles.plusButton}
-				/>
-				</TouchableOpacity>
-      ),
       headerLeft: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate("Home")}>
           <Icon name="home" size={18} color="white" style={{marginLeft: 16}} solid />

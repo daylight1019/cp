@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   buttonView: {
+    alignItems: 'center',
     margin: 10,
     height: 35,
     flexDirection: 'row',

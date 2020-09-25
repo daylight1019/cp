@@ -17,16 +17,18 @@ import {
 
   PROJECTDETAIL_SUCCESS,
   PROJECT_SUCCESS,
+  STATE_SUCCESS,
 
   UPDATE_LEAD_SUCCESS,
   UPDATE_PERSON_SUCCESS,
   UPDATE_ADDRESS_SUCCESS,
   UPDATE_PHONE_SUCCESS,
-  UPDATE_LEADDETAIL_SUCCESS,
+  UPDATE_LEADDETAIL_SUCCESS
 } from '../constants/action-types';
 
 const initialState = {
   leadsInfo: [],
+  statesInfo: [],
   oneLeadInfo: {},
   isLoading: false,
   error: false
@@ -40,6 +42,7 @@ const leadReducer = (state = initialState, action: Object) => {
   switch (action.type) {
     case LEAD_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: parseData,
@@ -47,6 +50,7 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case LEAD_REQUEST: {
       return {
+        ...state,
         isLoading: true,
         error: false,
         leadsInfo: {},
@@ -61,6 +65,7 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case ONE_LEAD_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         oneLeadInfo: parseData,
@@ -69,16 +74,15 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case ADD_LEAD_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        // leadsInfo: state.leadsInfo.map(lead=>(lead.person.id==parseData.personid?{...lead,lead:parseData}:lead)),
         leadsInfo: state.leadsInfo.concat({ person: parseData }),
       };
     }
     case ADD_PERSON_SUCCESS: {
-      console.log("HERE is ADD PERSON SUCCESS", JSON.stringify(state.leadsInfo));
-      console.log("PERSON DATA", action.data)
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.concat({ person: parseData }),
@@ -86,6 +90,7 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case ADD_PHONE_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, phone: parseData } : lead))
@@ -93,6 +98,7 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case ADD_ADDRESS_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, address: parseData } : lead))
@@ -100,6 +106,7 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case ADD_LEADDETAIL_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, leaddetail: parseData } : lead)),
@@ -133,22 +140,23 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case UPDATE_LEAD_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        leadsInfo: state.leadsInfo.map(lead=>(lead.person.id==parseData.personid?{...lead,lead:parseData}:lead)),
-        // leadsInfo: state.leadsInfo.concat({ person: parseData }),
+        leadsInfo: state.leadsInfo.map(lead => (lead.id == parseData.id ? { ...lead, active: parseData.active } : lead)),
       };
     }
     case UPDATE_PERSON_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        leadsInfo: state.leadsInfo.map(lead=>(lead.person.id==parseData.personid?{...lead,person:parseData}:lead)),
-        // leadsInfo: state.leadsInfo.concat({ person: parseData }),
+        leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.id ? { ...lead, person: parseData } : lead)),
       };
     }
     case UPDATE_PHONE_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, phone: parseData } : lead))
@@ -156,6 +164,7 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case UPDATE_ADDRESS_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, address: parseData } : lead))
@@ -163,9 +172,16 @@ const leadReducer = (state = initialState, action: Object) => {
     }
     case UPDATE_LEADDETAIL_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
         leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, leaddetail: parseData } : lead)),
+      };
+    }
+    case STATE_SUCCESS: {
+      return {
+        ...state,
+        statesInfo: parseData
       };
     }
     default: {

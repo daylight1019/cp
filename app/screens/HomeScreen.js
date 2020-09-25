@@ -1,26 +1,16 @@
-import React, { Component, useLayoutEffect } from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
-  Button,
-  TextInput,
   Dimensions,
   StyleSheet,
-  Image,
-  CheckBox,
-  SafeAreaView,
   TouchableOpacity,
   Animated
 } from 'react-native';
 
-import { HeaderBackButton } from '@react-navigation/stack';
 import SideMenu from 'react-native-side-menu';
-import ActiveMenu from '../menus/ActiveMenu';
 import SystemMenu from '../menus/SystemMenu';
-import { RawButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
-import { BottomNavigationAction, BottomNavigation, Toolbar, IconToggle, IconButton, MenuIcon, Typography } from 'react-native-material-ui'
 
 export default class HomeScreen extends Component {
   constructor(props) {

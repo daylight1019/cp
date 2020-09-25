@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   buttonView: {
+    alignItems: 'center',
     backgroundColor: "green",
     width: 150,
     height: 30,
@@ -56,7 +57,7 @@ export default function ActiveMenu({ onItemSelected }) {
         <Text style={styles.name}>Inactive</Text>
       </View>
 
-      <TouchableOpacity onPress = { () => alert('a') } style = {styles.buttonView}>
+      <TouchableOpacity onPress={() => alert('a')} style={styles.buttonView}>
         <Text
           onPress={() => onItemSelected('About')}
           style={styles.item}
@@ -65,7 +66,7 @@ export default function ActiveMenu({ onItemSelected }) {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress = { () => alert('a') } style = {styles.buttonView}>
+      <TouchableOpacity onPress={() => alert('a')} style={styles.buttonView}>
         <Text
           onPress={() => onItemSelected('Contacts')}
           style={styles.item}
@@ -74,7 +75,7 @@ export default function ActiveMenu({ onItemSelected }) {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress = { () => alert('a') } style = {styles.buttonView}>
+      <TouchableOpacity onPress={() => alert('a')} style={styles.buttonView}>
         <Text
           onPress={() => onItemSelected('Contacts')}
           style={styles.item}
@@ -83,7 +84,7 @@ export default function ActiveMenu({ onItemSelected }) {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress = { () => alert('a') } style = {styles.buttonView}>
+      <TouchableOpacity onPress={() => alert('a')} style={styles.buttonView}>
         <Text
           onPress={() => onItemSelected('Contacts')}
           style={styles.item}

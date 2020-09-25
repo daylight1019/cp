@@ -29,6 +29,7 @@ class EstimateScreen extends Component {
       error: false,
       isLoading: false,
       searchText: '',
+      isActive: '',
       projectsInfo: []
     };
   }
@@ -51,6 +52,7 @@ class EstimateScreen extends Component {
 
 
   componentDidMount() {
+    this.setState({ isLoading: true })
     this.statusType = this.props.route.params.status;
     if (this.statusType == 'estimate') {
       this.screenTitle = 'Estimate'
@@ -61,43 +63,29 @@ class EstimateScreen extends Component {
     else if (this.statusType == 'complete') {
       this.screenTitle = 'Complete'
     }
-    if (this.statusType == 'estimate') {
-      this.props.navigation.setOptions({
-        title: this.screenTitle,
-        headerRight: (props) => (
-          <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewLead')} >
-            <Icon name="user-plus" style={{ marginRight: 12 }} size={18} color="#ffffff" solid />
-          </TouchableOpacity>
 
-        ),
-        headerLeft: (props) => (
-          <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate("Home")}>
-            <Icon name="home" size={18} color="white" style={{ marginLeft: 16 }} solid />
-          </TouchableOpacity>
-        )
-      });
-    } else {
-      this.props.navigation.setOptions({
-        title: this.screenTitle,
-        headerTitleStyle: {
-          textAlign: 'center',
-          height: 30,
-          marginLeft:-50
-        },
-        headerLeft: (props) => (
-          <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate("Home")}>
-            <Icon name="home" size={18} color="white" style={{ marginLeft: 16 }} solid />
-          </TouchableOpacity>
-        )
-      });
-    }
+    this.props.navigation.setOptions({
+      title: this.screenTitle,
+      headerTitleStyle: {
+        textAlign: 'center',
+        height: 30,
+        marginLeft: -50
+      },
+      headerLeft: (props) => (
+        <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate("Home")}>
+          <Icon name="home" size={18} color="white" style={{ marginLeft: 16 }} solid />
+        </TouchableOpacity>
+      )
+    });
 
     this.loadData();
   }
 
   async loadData() {
-    await this.props.fetchProject();
+    await this.props.fetchProject(this.statusType);
     await this.props.fetchProjectDetail();
+    this.setState({ isActive: this.props.route.params.active });
+    this.setState({ isLoading: false })
   }
 
   render() {
@@ -111,31 +99,37 @@ class EstimateScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <View style={styles.container}>
-          <TextInput style={styles.searchProject} onChangeText={text => this.setState({ searchText: text })} label="Input Search Projects"></TextInput>
-          <ScrollView>
-            {(this.props.projectsInfo != undefined) && (
-              this.props.projectsInfo.map((project, index) => (
-                (project.projectstatus == this.statusType) &&
-                (project.person.firstname.indexOf(this.state.searchText) != -1) && (
-                  <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
-                    <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
-                      <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate("EditEstimate", { project, status: this.screenTitle })}>
-                        <View style={{ width: Dimensions.get('window').width - 65, marginLeft: 5 }}>
-                          <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 0 }}>{project.person.firstname + " " + project.person.lastname}</Text>
-                          <Text style={{ fontSize: 10, marginTop: 5 }}>{project.person.company}</Text>
-                        </View>
-                        <View style={{ alignSelf: 'flex-end' }}>
-                          <Icon style={{ marginTop: -28 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </View>)
-              ))
-            )}
-            <View style={{ height: 5 }}></View>
-          </ScrollView>
-        </View>
+        {this.state.isLoading ?
+          <View style={styles.container}>
+
+          </View>
+          :
+          <View style={styles.container}>
+            <TextInput style={styles.searchProject} onChangeText={text => this.setState({ searchText: text })} label="Input Search Projects"></TextInput>
+            <ScrollView>
+              {(this.props.projectsInfo != undefined) && (
+                this.props.projectsInfo.map((project, index) => (
+                  (project.projectstatus == this.statusType && project.active == this.state.isActive) &&
+                  (project.person.firstname.indexOf(this.state.searchText) != -1) && (
+                    <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
+                      <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
+                        <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate("EditEstimate", { project, status: this.screenTitle })}>
+                          <View style={{ width: Dimensions.get('window').width - 65, marginLeft: 5 }}>
+                            <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 0 }}>{project.person.firstname + " " + project.person.lastname}</Text>
+                            <Text style={{ fontSize: 10, marginTop: 5 }}>{project.person.company}</Text>
+                          </View>
+                          <View style={{ alignSelf: 'flex-end' }}>
+                            <Icon style={{ marginTop: -28 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>)
+                ))
+              )}
+              <View style={{ height: 5 }}></View>
+            </ScrollView>
+          </View>
+        }
       </SideMenu>
     )
   };
@@ -179,7 +173,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchProject: () => dispatch(getProjects()),
+  fetchProject: (status) => dispatch(getProjects(status)),
   fetchProjectDetail: () => dispatch(getOneProjectDetail()),
 });
 

@@ -46,7 +46,7 @@ class RegisterScreen extends Component {
           <TextInput
             style={styles.textInput}
             label="First Name"
-            underlineColor = 'rgba(50,162,235,0.8)'
+            underlineColor='rgba(50,162,235,0.8)'
             onChangeText={text => this.setState({ firstName: text })}
             value={this.state.firstName}
           />
@@ -55,7 +55,7 @@ class RegisterScreen extends Component {
           <TextInput
             style={styles.textInput}
             label="Last Name"
-            underlineColor = 'rgba(50,162,235,0.8)'
+            underlineColor='rgba(50,162,235,0.8)'
             onChangeText={text => this.setState({ lastName: text })}
             value={this.state.lastName}
           />
@@ -64,7 +64,7 @@ class RegisterScreen extends Component {
           <TextInput
             style={styles.textInput}
             label="Email"
-            underlineColor = 'rgba(50,162,235,0.8)'
+            underlineColor='rgba(50,162,235,0.8)'
             onChangeText={text => this.setState({ email: text })}
             value={this.state.email}
           />
@@ -73,7 +73,7 @@ class RegisterScreen extends Component {
           <TextInput
             style={styles.textInput}
             label="Password"
-            underlineColor = 'rgba(50,162,235,0.8)'
+            underlineColor='rgba(50,162,235,0.8)'
             onChangeText={text => this.setState({ pwd: text })}
             value={this.state.pwd}
             secureTextEntry={true}
@@ -83,7 +83,7 @@ class RegisterScreen extends Component {
           <TextInput
             style={styles.textInput}
             label="Confirm Password"
-            underlineColor = 'rgba(50,162,235,0.8)'
+            underlineColor='rgba(50,162,235,0.8)'
             onChangeText={text => this.setState({ confirmPwd: text })}
             value={this.state.confirmPwd}
             secureTextEntry={true}
@@ -95,7 +95,7 @@ class RegisterScreen extends Component {
             onValueChange={checkState => this.setState({ agreeTerm: checkState })}
             style={styles.checkbox}
           />
-          <Text>I agree to <Text style={styles.linkText} onPress = {() => this.props.navigation.navigate("Term", {navMode:0})}>Terms & Policies</Text> </Text>
+          <Text>I agree to <Text style={styles.linkText} onPress={() => this.props.navigation.navigate("Term", { navMode: 0 })}>Terms & Policies</Text> </Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.onRegister} style={{ ...styles.buttonView, backgroundColor: this.state.agreeTerm ? "rgba(51,122,183,1.0)" : "rgba(20,20,20,0.3)" }}>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 2
   },
-  registerButtonView: {
+  registerbuttonView: {
     width: Dimensions.get('window').width / 2,
     marginTop: 20
   },
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     marginTop: -5
   },
   buttonView: {
+    alignItems: 'center',
     margin: 10,
     height: 35,
     flexDirection: 'row',

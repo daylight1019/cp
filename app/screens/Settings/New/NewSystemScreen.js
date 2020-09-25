@@ -37,10 +37,10 @@ class NewSystemScreen extends Component {
       ingredientsInfo: [],
       itemsState: [],
       checkState: [],
-      isActive:false,
-      isShare:false,
-      systemName:'',
-      systemPrice:'',
+      isActive: false,
+      isShare: false,
+      systemName: '',
+      systemPrice: '',
       unitList: [],
       extraList: []
     };
@@ -69,7 +69,8 @@ class NewSystemScreen extends Component {
     });
 
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ isLoading: true })
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={this.onSave}>
@@ -77,11 +78,14 @@ class NewSystemScreen extends Component {
         </TouchableOpacity>
       )
     });
-    this.props.fetchGetIngredient();
-    this.state.itemsState = new Array(this.props.ingredientsInfo.length).fill(false);
-    this.state.checkState = new Array(this.props.ingredientsInfo.length).fill(false);
-    this.state.unitList = new Array(this.props.ingredientsInfo.length).fill(0);
-    this.state.extraList = new Array(this.props.ingredientsInfo.length).fill('');
+    await this.props.fetchGetIngredient();
+    this.setState({
+      itemsState: new Array(this.props.ingredientsInfo.length).fill(false),
+      checkState: new Array(this.props.ingredientsInfo.length).fill(false),
+      unitList: new Array(this.props.ingredientsInfo.length).fill(0),
+      extraList: new Array(this.props.ingredientsInfo.length).fill('')
+    })
+    this.setState({ isLoading: false })
   }
 
   toggleIngredient = () => {
@@ -92,16 +96,16 @@ class NewSystemScreen extends Component {
 
   onSave = () => {
     var sendParam = {
-      name:this.state.systemName,
-      saleprice:this.state.systemPrice,
+      name: this.state.systemName,
+      saleprice: this.state.systemPrice,
       ingredients: []
     }
-    this.state.checkState.map((x,i)=>{
-      if(x){
+    this.state.checkState.map((x, i) => {
+      if (x) {
         let ingredient = {
-          ingredientid:this.props.ingredientsInfo[i].id,
-          extra:this.state.extraList[i],
-          factor:this.state.unitList[i]
+          ingredientid: this.props.ingredientsInfo[i].id,
+          extra: this.state.extraList[i],
+          factor: this.state.unitList[i]
         }
         sendParam.ingredients.push(ingredient);
       }
@@ -113,7 +117,7 @@ class NewSystemScreen extends Component {
   _renderIngredient = () => {
     if (this.state.ingredientOpen) {
       return (
-        <View style={{marginBottom:10}}>
+        <View style={{ marginBottom: 10 }}>
           <ScrollView>
             {(this.props.ingredientsInfo.length > 0) && (
               this.props.ingredientsInfo.map((ingredient, index) => (
@@ -124,7 +128,7 @@ class NewSystemScreen extends Component {
                         <CheckBox size={10} style={{ marginLeft: -10, marginTop: 5 }} value={this.state.checkState[index]} onValueChange={() => this.setState({ checkState: this.state.checkState.map((x, i) => i == index ? !x : x) })}></CheckBox>
                         <View style={{ width: Dimensions.get('window').width - 90 }}>
                           <Text style={{ fontSize: 12, fontWeight: 'bold', marginTop: 3 }}>{ingredient.name}</Text>
-                          <Text style={{ fontSize: 10, marginTop: 5 }}>{ingredient.purchageprice}</Text>
+                          <Text style={{ fontSize: 10, marginTop: 5 }}>{ingredient.purchaseprice}</Text>
                         </View>
                         <View style={{ alignSelf: 'flex-end' }}>
                           <Icon style={{ marginTop: -27 }} name={this.state.itemsState[index] ? "angle-down" : "angle-right"} size={18} color="rgba(10,10,10,0.5)" solid />
@@ -137,13 +141,13 @@ class NewSystemScreen extends Component {
                       <View style={{ flexDirection: 'row', marginLeft: 50, marginTop: 20, height: 25, width: 30 }}>
                         <Text style={{ fontSize: 11 }}>Units</Text>
                         <View style={styles.smallTextInput}>
-                          <TextInput containerMaxWidth={200} paddingBottom={0} paddingTop={0} fontSize={11} containerMaxHeight={50} onChangeText={text => this.setState({ unitList: this.state.unitList.map((x,i)=>i==index?text:x) })} value={this.state.unitList[index]}></TextInput>
+                          <TextInput containerMaxWidth={200} paddingBottom={0} paddingTop={0} fontSize={11} containerMaxHeight={50} onChangeText={text => this.setState({ unitList: this.state.unitList.map((x, i) => i == index ? text : x) })} value={this.state.unitList[index]}></TextInput>
                         </View>
                       </View>
                       <View style={{ flexDirection: 'row', marginLeft: 50, height: 20 }}>
                         <Text style={{ fontSize: 11 }}>Extra</Text>
                         <View style={styles.smallTextInput}>
-                          <TextInput containerMaxWidth={200} containerWidth={200} paddingBottom={0} paddingTop={0} fontSize={11} containerMaxHeight={50} onChangeText={text => this.setState({ extraList: this.state.extraList.map((x,i)=>i==index?text:x) })} value={this.state.extraList[index]}></TextInput>
+                          <TextInput containerMaxWidth={200} containerWidth={200} paddingBottom={0} paddingTop={0} fontSize={11} containerMaxHeight={50} onChangeText={text => this.setState({ extraList: this.state.extraList.map((x, i) => i == index ? text : x) })} value={this.state.extraList[index]}></TextInput>
                         </View>
                       </View>
                     </View>)}
@@ -168,27 +172,33 @@ class NewSystemScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <ScrollView style={{ flex: 1, backgroundColor: '#F5FCFF', }}>
+        {this.state.isLoading ?
           <View style={styles.container}>
-            <View style={{ marginTop: 20 }}>
-              <TextInput label="Name" underlineColor='rgba(50,162,235,0.8)' paddingBottom={2} fontSize={12} style={styles.textInput} onChangeText={text => this.setState({ systemName: text })} value={this.state.systemName}></TextInput>
-            </View>
-            <View style={styles.switchView}>
-              <Text style={{ fontSize: 12 }}>Active</Text>
-              <Switch style={styles.switch} value={this.state.isActive} onValueChange={() => this.setState({isActive:!this.state.isActive})}></Switch>
-              <Text style={{ fontSize: 12, marginLeft: 80 }}>Share</Text>
-              <Switch style={styles.switch} value={this.state.isShare} onValueChange={() => this.setState({isShare:!this.state.isShare})}></Switch>
-            </View>
-            <View>
-              <TextInput label="System price/sq ft" underlineColor='rgba(50,162,235,0.8)' paddingBottom={2} fontSize={12} style={styles.textInput} onChangeText={text => this.setState({ systemPrice: text })} value={this.state.systemPrice}></TextInput>
-            </View>
-            <TouchableOpacity onPress={() => this.toggleIngredient()} style={{ ...styles.buttonView, backgroundColor: this.state.ingredientOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
-              {this.state.ingredientOpen ? <Icon name="minus-circle" style={{ margin: 8, height: 35 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8, height: 35 }} size={16} color="#ffffff" solid />}
-              <Text style={styles.buttonText}>Ingredient</Text>
-            </TouchableOpacity>
-            {this._renderIngredient()}
+
           </View>
-        </ScrollView>
+          :
+          <ScrollView style={{ flex: 1, backgroundColor: '#F5FCFF', }}>
+            <View style={styles.container}>
+              <View style={{ marginTop: 20 }}>
+                <TextInput label="Name" underlineColor='rgba(50,162,235,0.8)' paddingBottom={2} fontSize={12} style={styles.textInput} onChangeText={text => this.setState({ systemName: text })} value={this.state.systemName}></TextInput>
+              </View>
+              <View style={styles.switchView}>
+                <Text style={{ fontSize: 12 }}>Active</Text>
+                <Switch style={styles.switch} value={this.state.isActive} onValueChange={() => this.setState({ isActive: !this.state.isActive })}></Switch>
+                <Text style={{ fontSize: 12, marginLeft: 80 }}>Share</Text>
+                <Switch style={styles.switch} value={this.state.isShare} onValueChange={() => this.setState({ isShare: !this.state.isShare })}></Switch>
+              </View>
+              <View>
+                <TextInput label="System price/sq ft" underlineColor='rgba(50,162,235,0.8)' paddingBottom={2} fontSize={12} style={styles.textInput} onChangeText={text => this.setState({ systemPrice: text })} value={this.state.systemPrice}></TextInput>
+              </View>
+              <TouchableOpacity onPress={() => this.toggleIngredient()} style={{ ...styles.buttonView, backgroundColor: this.state.ingredientOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
+                {this.state.ingredientOpen ? <Icon name="minus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid />}
+                <Text style={styles.buttonText}>Ingredient</Text>
+              </TouchableOpacity>
+              {this._renderIngredient()}
+            </View>
+          </ScrollView>
+        }
       </SideMenu>
     )
   };
@@ -235,6 +245,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   buttonView: {
+    alignItems: 'center',
     width: Dimensions.get('window').width - 24,
     margin: 10,
     height: 35,

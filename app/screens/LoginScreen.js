@@ -19,7 +19,7 @@ class LoginScreen extends Component{
   constructor(props){
     super(props);
     this.state = {
-      email: 'a@gmail.com',
+      email: 'test@gmail.com',
       pwd: '123456'
     }
   }
@@ -30,7 +30,7 @@ class LoginScreen extends Component{
   };
 
   onLogin = () => {
-    this.props.navigation.navigate('Home');
+    // this.props.navigation.navigate('Home');
     this.props.fetchLogin(this.state.email, this.state.pwd, this.onLoginSuccess);
   }
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 5
   },
-  loginButtonView: {
+  loginButtonView: { 
     width: Dimensions.get('window').width / 2,
     marginTop: 48,
     marginBottom: 24

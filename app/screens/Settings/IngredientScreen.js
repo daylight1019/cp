@@ -55,6 +55,7 @@ class IngredientScreen extends Component {
 
 
   componentDidMount() {
+    this.setState({ isLoading: true })
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewIngredient')} >
@@ -68,6 +69,7 @@ class IngredientScreen extends Component {
       )
     });
     this.props.fetchGetIngredient();
+    this.setState({ isLoading: false })
   }
 
   render() {
@@ -81,28 +83,36 @@ class IngredientScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <ScrollView style={styles.container}>
-          <TextInput style={styles.searchIngredient} onChangeText={text => this.setState({ searchText: text })} placeholder="Input Search ingredients"></TextInput>
-          {(this.props.ingredientsInfo.length > 0) && (
-            this.props.ingredientsInfo.map((ingredient, index) => (
-              (ingredient.name.indexOf(this.state.searchText) != -1) && (
-                <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
-                  <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
-                    <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('EditIngredient', { ingredient })}>
-                      <View style={{ width: Dimensions.get('window').width - 65 }}>
-                        <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 3 }}>{ingredient.name}</Text>
-                        <Text style={{ fontSize: 10, marginTop: 5 }}>Price: ${ingredient.purchageprice}</Text>
-                        <Text style={{ fontSize: 10, marginTop: 2 }}>Coverage: {ingredient.coverage}</Text>
-                      </View>
-                      <View style={{ alignSelf: 'flex-end' }}>
-                        <Icon style={{ marginTop: -35 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                </View>)
-            ))
-          )}
-        </ScrollView>
+        {this.state.isLoading ?
+          <View style={styles.container}>
+
+          </View>
+          :
+          <ScrollView style={styles.container}>
+            <TextInput style={styles.searchIngredient} onChangeText={text => this.setState({ searchText: text })} placeholder="Input Search ingredients"></TextInput>
+            {(this.props.ingredientsInfo.length > 0) && (
+              this.props.ingredientsInfo.map((ingredient, index) => (
+                (ingredient.name.indexOf(this.state.searchText) != -1) && (
+                  <View style={{ ...styles.cellView, height: ingredient.name.length > 50 ? 72 : 65, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
+                    <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
+                      <TouchableOpacity style={{ marginLeft: 15, marginTop: 5, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('EditIngredient', { ingredient })}>
+                        <View style={{ width: Dimensions.get('window').width - 60 }}>
+                          <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ flexShrink: 1, fontSize: 12, fontWeight: 'bold', marginTop: 3 }}>{ingredient.name}</Text>
+                          </View>
+                          <Text style={{ fontSize: 10, marginTop: 4 }}>Price: ${ingredient.purchaseprice}</Text>
+                          <Text style={{ fontSize: 10, marginTop: 1 }}>Coverage: {ingredient.coverage}</Text>
+                        </View>
+                        <View style={{ alignSelf: 'flex-end' }}>
+                          <Icon style={{ marginTop: ingredient.name.length > 50  ? -40 : -33 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>)
+              ))
+            )}
+          </ScrollView>
+        }
       </SideMenu>
     )
   };
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
   },
   cellView: {
     width: Dimensions.get('window').width - 20,
-    height: 80,
+    height: 65,
     marginVertical: 3,
     backgroundColor: 'rgba(15,15,15,0.3)',
     borderColor: 'black',

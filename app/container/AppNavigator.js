@@ -52,7 +52,7 @@ const AppNavigator = () => {
         headerTintColor: 'white',
       }} />
       <Stack.Screen name="ActiveLeads" component={ActiveLeadsScreen} options={{
-        title: 'Active Leads',
+        title: 'Leads',
         headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />
@@ -172,7 +172,7 @@ const AppNavigator = () => {
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EstimateSystem" component={EstimateSystemScreen} options={{
-        title: 'Edit Estimate',
+        title: 'Edit Estimate System',
         headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />

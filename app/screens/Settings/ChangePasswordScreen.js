@@ -78,7 +78,7 @@ class ChangePasswordScreen extends Component {
               leftIcon="lock-closed"
               label="Password"
               value={this.state.pwd}
-              underlineColor = 'rgba(50,162,235,0.8)'
+              underlineColor='rgba(50,162,235,0.8)'
               activeColor="#00A2E8"
               onChangeText={text => this.setState({ pwd: text })}
               secureTextEntry={true}
@@ -91,7 +91,7 @@ class ChangePasswordScreen extends Component {
               label="New Password"
               value={this.state.newPwd}
               activeColor="#00A2E8"
-              underlineColor = 'rgba(50,162,235,0.8)'
+              underlineColor='rgba(50,162,235,0.8)'
               onChangeText={text => this.setState({ newPwd: text })}
               secureTextEntry={true}
             />
@@ -103,7 +103,7 @@ class ChangePasswordScreen extends Component {
               label="Confirm Password"
               value={this.state.confirmPwd}
               activeColor="#00A2E8"
-              underlineColor = 'rgba(50,162,235,0.8)'
+              underlineColor='rgba(50,162,235,0.8)'
               onChangeText={text => this.setState({ confirmPwd: text })}
               secureTextEntry={true}
             />
@@ -131,11 +131,11 @@ const styles = StyleSheet.create({
     height: 30,
     padding: 5,
     borderBottomWidth: 1,
-    fontSize:12,
+    fontSize: 12,
     marginBottom: 10,
     marginTop: 16
   },
-  registerButtonView: {
+  registerbuttonView: {
     width: Dimensions.get('window').width / 2,
     marginTop: 32
   },
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     marginTop: -5
   },
   buttonView: {
+    alignItems: 'center',
     margin: 10,
     height: 35,
     flexDirection: 'row',

@@ -57,6 +57,7 @@ class PatternScreen extends Component {
 
 
   componentDidMount() {
+    this.setState({ isLoading: true })
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewPattern')} >
@@ -65,12 +66,13 @@ class PatternScreen extends Component {
       ),
       headerLeft: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate("Home")}>
-          <Icon name="home" size={18} color="white" style={{marginLeft: 16}} solid />
+          <Icon name="home" size={18} color="white" style={{ marginLeft: 16 }} solid />
         </TouchableOpacity>
       )
     });
 
     this.props.fetchGetPattern();
+    this.setState({ isLoading: false })
   }
 
   render() {
@@ -85,26 +87,32 @@ class PatternScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <ScrollView style={styles.container}>
-          <TextInput style={styles.textInput} onChangeText={text => this.setState({ searchText: text })} placeholder="Input Pattern Leads"></TextInput>
-          {(this.props.patternsInfo.length > 0) && (
-            this.props.patternsInfo.map((pattern, index) => (
-              (pattern.name.indexOf(this.state.searchText) != -1) && (
-                <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
-                  <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
-                    <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={()=>this.props.navigation.navigate('EditPattern', {pattern})}>
-                      <View style={{ width: Dimensions.get('window').width - 65 }}>
-                        <Text style={{ fontSize: 16 }}>{pattern.name}</Text>
-                      </View>
-                      <View style={{ alignSelf: 'flex-end' }}>
-                        <Icon style={{ marginTop: 0 }} name="angle-right" size={25} color="rgba(10,10,10,0.5)" solid />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                </View>)
-            ))
-          )}
-        </ScrollView>
+        {this.state.isLoading ?
+          <View style={styles.container}>
+
+          </View>
+          :
+          <ScrollView style={styles.container}>
+            <TextInput style={styles.textInput} onChangeText={text => this.setState({ searchText: text })} placeholder="Input Pattern Leads"></TextInput>
+            {(this.props.patternsInfo.length > 0) && (
+              this.props.patternsInfo.map((pattern, index) => (
+                (pattern.name.indexOf(this.state.searchText) != -1) && (
+                  <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
+                    <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
+                      <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('EditPattern', { pattern })}>
+                        <View style={{ width: Dimensions.get('window').width - 65 }}>
+                          <Text style={{ fontSize: 16 }}>{pattern.name}</Text>
+                        </View>
+                        <View style={{ alignSelf: 'flex-end' }}>
+                          <Icon style={{ marginTop: 0 }} name="angle-right" size={25} color="rgba(10,10,10,0.5)" solid />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>)
+              ))
+            )}
+          </ScrollView>
+        }
       </SideMenu>
     )
   };

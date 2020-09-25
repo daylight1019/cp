@@ -1,6 +1,7 @@
 'use strict'
 
-const BASE_URL = 'http://192.168.109.231:8000/api/'
+// const BASE_URL = 'http://192.168.109.231:8000/api/'
+const BASE_URL = 'http://dev.myincredibleone.com/api/'
 
 const address = {
 	baseUrl: () => {
@@ -117,7 +118,15 @@ const address = {
 
 	getNote: (id) => {
 		return BASE_URL + 'project/note/list/' + id
-	}
+	},
+
+	getState: () => {
+		return BASE_URL + 'states'
+	},
+
+	getProjectByStatus: (status) => {
+		return BASE_URL + 'project/getprojectsbystatus/' + status
+	},
 
 }
 

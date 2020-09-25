@@ -79,6 +79,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
+    nodeExecutableAndArgs: ["node", "--max-old-space-size=8192"]
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -132,8 +133,8 @@ android {
         applicationId "com.concrete"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
     }
     splits {
         abi {

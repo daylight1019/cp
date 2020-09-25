@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 2
   },
-  registerButtonView: {
+  registerbuttonView: { 
     width: Dimensions.get('window').width / 2,
     marginTop: 20
   },

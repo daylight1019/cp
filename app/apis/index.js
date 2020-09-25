@@ -18,7 +18,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
-        if (data[data.length - 1] != "}") data += "}";
+        data = this.checkJSON(data);
         let parseData = JSON.parse(data);
         saveToken(parseData.token);
         return parseData;
@@ -40,6 +40,7 @@ export default class Channel {
     })
       .then((response) => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -61,6 +62,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         if (data[data.length - 1] != ']') data += ']';
         return data;
       })
@@ -83,6 +85,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -106,6 +109,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -129,6 +133,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -152,6 +157,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -173,6 +179,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         if (data[data.length - 1] != ']') data += ']'
         return data;
       })
@@ -194,6 +201,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -216,6 +224,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -238,6 +247,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -259,6 +269,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -282,6 +293,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -305,6 +317,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -327,6 +340,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -348,6 +362,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -369,6 +384,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -390,6 +406,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -410,6 +427,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -431,6 +449,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -455,6 +474,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -478,6 +498,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -501,6 +522,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -524,6 +546,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -547,6 +570,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -570,6 +594,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -593,6 +618,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -616,6 +642,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         if (data[data.length - 1] != '}') data += '}';
         return data;
       })
@@ -639,6 +666,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         console.log("Add Project Detail", data);
         return data;
       })
@@ -662,6 +690,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         console.log("Update Project Detail", data);
         return data;
       })
@@ -685,6 +714,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         console.log("Update Project", data);
         return data;
       })
@@ -709,6 +739,8 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
+        if (data[data.length - 1] != '}') data += '}'
         console.log("Person Update Result", JSON.stringify(data));
         return data;
       })
@@ -723,7 +755,7 @@ export default class Channel {
     var token = await getToken();
     console.log("=======================updateLeadFromApi");
 
-    return fetch(address.addLead(), {
+    return fetch(address.addLead() + '/' + param.id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -734,6 +766,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         console.log("Update Person Result", JSON.stringify(data));
         return data;
       })
@@ -758,6 +791,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -782,6 +816,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         console.log("update address result=====", JSON.stringify(data));
         return data;
       })
@@ -794,8 +829,9 @@ export default class Channel {
   async updateLeadDetailFromApi(leadDetail) {
     var param = leadDetail;
     var token = await getToken();
-
-    return fetch(address.addLeadDetail(), {
+    console.log("Param", JSON.stringify(param));
+    console.log("Token", JSON.stringify(token));
+    return fetch(address.addLeadDetail() + '/' + param.id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -806,6 +842,8 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
+        console.log(data)
         return data;
       })
       .catch((error) => {
@@ -827,7 +865,9 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         if (data[data.length - 1] != ']') data += ']';
+        console.log("Projects List", data)
         return data;
       })
       .catch((error) => {
@@ -849,6 +889,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -870,6 +911,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -891,10 +933,33 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
         console.log("------------- Get Note Error" + error)
+        return null;
+      });
+  }
+
+  async getStateFromApi() {
+    var token = await getToken();
+
+    return fetch(address.getState(), {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then(response => response.text())
+      .then((data) => {
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Get State Error" + error)
         return null;
       });
   }
@@ -913,6 +978,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -935,6 +1001,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -957,6 +1024,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        data = this.checkJSON(data);
         return data;
       })
       .catch((error) => {
@@ -965,4 +1033,32 @@ export default class Channel {
       });
   }
 
+  async getProjectByStatus(status) {
+    var token = await getToken();
+    return fetch(address.getProjectByStatus(status), {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then(response => response.text())
+      .then((data) => {
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Get State Error" + error)
+        return null;
+      });
+  }
+
+  checkJSON(param) {
+    if (param == null || param == undefined) return;
+    var dataArray = [...param];
+    if (dataArray.filter(x => x == '{').length == dataArray.filter(x => x == '}').length + 1) param += '}'
+    if (dataArray.filter(x => x == '[').length == dataArray.filter(x => x == ']').length + 1) param += ']'
+    return param;
+  }
 }

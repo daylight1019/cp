@@ -92,7 +92,7 @@ export default class FeedbackScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1, 
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: 'white'
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonView: {
+    alignItems: 'center',
     margin: 10,
     height: 35,
     flexDirection: 'row',

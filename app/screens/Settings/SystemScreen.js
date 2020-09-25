@@ -51,6 +51,7 @@ class SystemScreen extends Component {
 
 
   componentDidMount() {
+    this.setState({ isLoading: true })
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewSystem')} >
@@ -64,6 +65,7 @@ class SystemScreen extends Component {
       )
     });
     this.props.fetchGetSystem();
+    this.setState({ isLoading: false })
   }
 
   onDetail = async (system) => {
@@ -83,30 +85,36 @@ class SystemScreen extends Component {
           [], { useNativeDriver: false }
         )}
       >
-        <View style={styles.container}>
-          <TextInput style={styles.searchSystem} onChangeText={text => this.setState({ searchText: text })} label="Input Search Systems"></TextInput>
-          <ScrollView>
-            {(this.props.systemsInfo.length > 0) && (
-              this.props.systemsInfo.map((system, index) => (
-                (system.name.indexOf(this.state.searchText) != -1) && (
-                  <View style={{ ...styles.cellView, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
-                    <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
-                      <TouchableOpacity style={{ marginLeft: 15, marginTop: 10, flexDirection: "row" }} onPress={() => this.onDetail(system)}>
-                        <View style={{ width: Dimensions.get('window').width - 65 }}>
-                          <Text style={{ fontSize: 14, fontWeight: 'bold', marginTop: 3 }}>{system.name}</Text>
-                          <Text style={{ fontSize: 10, marginTop: 5 }}>Price: ${system.saleprice}</Text>
-                        </View>
-                        <View style={{ alignSelf: 'flex-end' }}>
-                          <Icon style={{ marginTop: -28 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </View>)
-              ))
-            )}
-            <View style={{ height: 5 }}></View>
-          </ScrollView>
-        </View>
+        {this.state.isLoading ?
+          <View style={styles.container}>
+
+          </View>
+          :
+          <View style={styles.container}>
+            <TextInput style={styles.searchSystem} onChangeText={text => this.setState({ searchText: text })} label="Input Search Systems"></TextInput>
+            <ScrollView>
+              {(this.props.systemsInfo.length > 0) && (
+                this.props.systemsInfo.map((system, index) => (
+                  (system.name.indexOf(this.state.searchText) != -1) && (
+                    <View style={{ ...styles.cellView, height: system.name.length > 50 ? 65 : 53, backgroundColor: index % 2 == 0 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
+                      <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
+                        <TouchableOpacity style={{ marginLeft: 15, marginTop: 5, flexDirection: "row" }} onPress={() => this.onDetail(system)}>
+                          <View style={{ width: Dimensions.get('window').width - 60 }}>
+                            <Text style={{ fontSize: 12, fontWeight: 'bold', marginTop: 3 }}>{system.name}</Text>
+                            <Text style={{ fontSize: 10, marginTop: 5 }}>Price: ${system.saleprice}</Text>
+                          </View>
+                          <View style={{ alignSelf: 'flex-end' }}>
+                            <Icon style={{ marginTop: system.name.length > 50 ? - 33 : -25 }} name="angle-right" size={18} color="rgba(10,10,10,0.5)" solid />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>)
+                ))
+              )}
+              <View style={{ height: 5 }}></View>
+            </ScrollView>
+          </View>
+        }
       </SideMenu>
     )
   };

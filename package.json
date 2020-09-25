@@ -19,6 +19,7 @@
     "nanoid": "^3.1.11",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-calendar-picker": "^7.0.0",
     "react-native-calendar-reminders": "^1.1.2",
     "react-native-calendars": "^1.403.0",
     "react-native-drawer": "^2.5.1",

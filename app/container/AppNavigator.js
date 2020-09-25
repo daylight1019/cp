@@ -32,6 +32,7 @@ import EditPatternScreen from '../screens/Settings/Edit/EditPatternScreen';
 import EditSystemScreen from '../screens/Settings/Edit/EditSystemScreen';
 import EditEstimateScreen from '../screens/Estimate/EditEstimateScreen';
 import EstimateSystemScreen from '../screens/Estimate/EstimateSystemScreen';
+import CalendarScreen from '../screens/Settings/CalendarScreen';
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,11 @@ const AppNavigator = () => {
       }} />
       <Stack.Screen name="ContractTemplate" component={ContractTemplateScreen} options={{
         title: 'Contracts Template',
+        headerTitleStyle:styles.headerTitle,
+        headerTintColor: 'white'
+      }} />
+      <Stack.Screen name="Calendar" component={CalendarScreen} options={{
+        title: 'Calendar',
         headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />

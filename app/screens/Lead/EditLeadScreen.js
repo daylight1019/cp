@@ -260,7 +260,7 @@ class EditLeadScreen extends Component {
     this.setState({ phoneList: this.state.phoneList.concat(this.phoneInfo) });
     this.setState({
       phoneNumber: '',
-      phoneType: null
+      phoneType: ''
     });
   }
 

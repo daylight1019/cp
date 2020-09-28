@@ -44,12 +44,12 @@ const AppNavigator = () => {
       <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login', headerShown: false }} />
       <Stack.Screen name="Register" component={RegisterScreen} options={{ 
         title: 'Register',
-        headerTitleStyle:{...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white',
       }} />
       <Stack.Screen name="Home" component={HomeScreen} options={{
         title: 'Home',
-        headerTitleStyle:{...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white',
       }} />
       <Stack.Screen name="ActiveLeads" component={ActiveLeadsScreen} options={{
@@ -74,7 +74,7 @@ const AppNavigator = () => {
       }} />
       <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{
         title: 'Change Password',
-        headerTitleStyle:{...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Color" component={ColorScreen} options={{
@@ -84,7 +84,7 @@ const AppNavigator = () => {
       }} />
       <Stack.Screen name="Feedback" component={FeedbackScreen} options={{
         title: 'Feedback',
-        headerTitleStyle: {...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Ingredient" component={IngredientScreen} options={{
@@ -99,17 +99,17 @@ const AppNavigator = () => {
       }} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} options={{
         title: 'Privacy Policy',
-        headerTitleStyle:{...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Purchase" component={PurchaseScreen} options={{
         title: 'Purchase',
-        headerTitleStyle:{...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Term" component={TermScreen} options={{
         title: 'Terms & Conditions',
-        headerTitleStyle:{...styles.headerTitle, marginLeft:-50},
+        headerTitleStyle:styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewLead" component={NewLeadScreen} options={{

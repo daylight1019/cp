@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Animated
 } from 'react-native';
-
+import { StackAction, NavigationActions } from 'react-navigation'
 import SideMenu from 'react-native-side-menu';
 import SystemMenu from '../menus/SystemMenu';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -49,6 +49,13 @@ export default class HomeScreen extends Component {
         </TouchableOpacity>
       )
     });
+
+    // const resetAction = NavigationActions.reset({
+    //   index: 0,
+    //   actions: [NavigationActions.navigate({ routeName: 'Home' })],
+    //   key: null
+    // })
+    // this.props.navigation.dispatch(resetAction)
   }
 
   render() {
@@ -84,8 +91,6 @@ export default class HomeScreen extends Component {
               <Text style={styles.activeText}>Complete</Text>
             </TouchableOpacity>
           </View>
-
-
           <View style={{ ...styles.partInactiveContainer, marginTop: 20 }}>
             <TouchableOpacity style={styles.buttonInactiveView1} onPress={() => this.props.navigation.navigate('ActiveLeads', { active: false })}>
               <Icon name="egg" size={40} color="#aaa" solid />

@@ -9,7 +9,7 @@ import {
   Button,
   Animated,
   Platform,
-  ActionSheetIOS  
+  ActionSheetIOS
 } from 'react-native';
 
 import SideMenu from 'react-native-side-menu';
@@ -248,14 +248,14 @@ class EditEstimateScreen extends Component {
       return (
         <View style={styles.container}>
           <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("EstimateSystem")} style={{ ...styles.buttonView, borderRadius: 10, backgroundColor: "rgba(51,222,30,0.8)", width: 120 }}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("EstimateSystem", { projectid: this.state.project.id, callBack: this.initComponent })} style={{ ...styles.buttonView, borderRadius: 10, backgroundColor: "rgba(51,222,30,0.8)", width: 120 }}>
               <Text style={{ ...styles.buttonText, width: 120 }}>New</Text>
             </TouchableOpacity>
           </View>
           {this.state.projectDetails != undefined && this.state.projectDetails.map((detail, index) =>
             (<View style={{ ...styles.cellView, backgroundColor: index % 2 == 1 ? 'rgba(55,55,55,0.1)' : 'rgba(50,162,235,0.4)' }} key={index}>
               <View style={{ flexDirection: "row", width: Dimensions.get('window').width - 10 }}>
-                <TouchableOpacity style={{ marginLeft: 15, marginTop: 5, flexDirection: "row" }} onPress={() => this.props.navigation.navigate("EstimateSystem", { detail: detail, callBack: this.initComponent })}>
+                <TouchableOpacity style={{ marginLeft: 15, marginTop: 5, flexDirection: "row" }} onPress={() => this.props.navigation.navigate("EstimateSystem", { detail, callBack: this.initComponent })}>
                   <View style={{ width: Dimensions.get('window').width - 55 }}>
                     <Text style={{ fontSize: 12, fontWeight: 'bold', marginTop: 3 }}>{detail.name}</Text>
                     <Text style={{ fontSize: 12, marginTop: 3 }}>${detail.systemprice}</Text>

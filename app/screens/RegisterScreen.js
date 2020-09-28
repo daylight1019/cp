@@ -99,7 +99,7 @@ class RegisterScreen extends Component {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.onRegister} style={{ ...styles.buttonView, backgroundColor: this.state.agreeTerm ? "rgba(51,122,183,1.0)" : "rgba(20,20,20,0.3)" }}>
-            <Text style={styles.buttonText}>Change</Text>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -80,21 +80,34 @@ class EstimateSystemScreen extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true })
-    this.props.navigation.setOptions({
-      headerRight: (props) => (
-        <TouchableOpacity activeOpacity={.5} onPress={() => this.onSave()} >
-          <Icon name="save" style={{ marginRight: 12 }} size={18} color="#ffffff" solid />
-        </TouchableOpacity>
-      )
-    });
-    this.detail = this.props.route.params.detail;
-    console.log("Detail", JSON.stringify(this.detail))
-    if (this.detail == undefined) {
+    if (this.props.route.params.detail == undefined) {
       this.setState({ isEditMode: false })
+      this.detail = {}
+      this.detail.projectid = this.props.route.params.projectid
       this.detail.name = ''
       this.detail.areawidth = ''
       this.detail.arealength = ''
+      this.detail.projectdetailstyles = []
+      this.props.navigation.setOptions({
+        title: "New Estimate System",
+        headerRight: (props) => (
+          <TouchableOpacity activeOpacity={.5} onPress={() => this.onSave()} >
+            <Icon name="save" style={{ marginRight: 12 }} size={18} color="#ffffff" solid />
+          </TouchableOpacity>
+        )
+      });
+    } else {
+      this.detail = this.props.route.params.detail;
+      this.props.navigation.setOptions({
+        title: "Edit Estimate System",
+        headerRight: (props) => (
+          <TouchableOpacity activeOpacity={.5} onPress={() => this.onSave()} >
+            <Icon name="save" style={{ marginRight: 12 }} size={18} color="#ffffff" solid />
+          </TouchableOpacity>
+        )
+      });
     }
+    console.log("Detail", JSON.stringify(this.detail))
     this.loadData();
   }
 
@@ -102,6 +115,7 @@ class EstimateSystemScreen extends Component {
     this.props.fetchGetColors();
     this.props.fetchGetPatterns();
     this.props.fetchGetSystem();
+    if (this.detail.systemid == undefined) this.detail.systemid = this.props.systemsInfo[0].id
     this.props.fetchGetOneSystem(this.detail.systemid);
     await this.props.fetchGetIngredient();
 
@@ -251,8 +265,6 @@ class EstimateSystemScreen extends Component {
 
   _renderIngredient = () => {
     if (this.state.ingredientOpen) {
-      console.log("aaaaaa", JSON.stringify(this.state.selectedPatterns));
-      console.log("bbbbbb", JSON.stringify(this.state.patternsList));
       return (
         <View style={{ marginBottom: 10 }}>
           {(this.props.ingredientsInfo.length > 0) && (
@@ -364,8 +376,6 @@ class EstimateSystemScreen extends Component {
 
   render() {
     const menu = <SystemMenu navigation={this.props.navigation} onItemSelected={this.onMenuItemSelected} />;
-    console.log("ccccccccc", JSON.stringify(this.state.systemPickerData));
-    console.log("ddddddddd", this.state.systemValue)
     return (
       <SideMenu
         menu={menu}

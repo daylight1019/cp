@@ -11,6 +11,7 @@ import { StackAction, NavigationActions } from 'react-navigation'
 import SideMenu from 'react-native-side-menu';
 import SystemMenu from '../menus/SystemMenu';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -73,41 +74,41 @@ export default class HomeScreen extends Component {
         <View style={styles.container}>
           <View style={styles.partContainer}>
             <TouchableOpacity style={styles.buttonView1} onPress={() => this.props.navigation.navigate('ActiveLeads', { active: true })}>
-              <Icon name="egg" size={50} color="#fff" solid />
+              <MaterialIcon name="recent-actors" size={50} color="#fff" solid />
               <Text style={styles.activeText}>Lead</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonView2} onPress={() => this.props.navigation.navigate('Estimate', { status: 'estimate', active: true })}>
-              <Icon name="discourse" size={50} color="#fff" solid />
+              <MaterialIcon name="business" size={50} color="#fff" solid />
               <Text style={styles.activeText}>Estimate</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.partContainer}>
             <TouchableOpacity style={styles.buttonView3} onPress={() => this.props.navigation.navigate('Estimate', { status: 'current', active: true })}>
-              <Icon name="servicestack" size={50} color="#fff" solid />
+              <Icon name="briefcase" size={50} color="#fff" solid />
               <Text style={styles.activeText}>Current</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonView4} onPress={() => this.props.navigation.navigate('Estimate', { status: 'complete', active: true })}>
-              <Icon name="check" size={50} color="#fff" solid />
+              <MaterialIcon name="check" size={50} color="#fff" solid />
               <Text style={styles.activeText}>Complete</Text>
             </TouchableOpacity>
           </View>
           <View style={{ ...styles.partInactiveContainer, marginTop: 20 }}>
             <TouchableOpacity style={styles.buttonInactiveView1} onPress={() => this.props.navigation.navigate('ActiveLeads', { active: false })}>
-              <Icon name="egg" size={40} color="#aaa" solid />
+              <MaterialIcon name="recent-actors" size={40} color="#aaa" solid />
               <Text style={{ fontSize: 12, color: "#aaa" }}>Lead</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonInactiveView2} onPress={() => this.props.navigation.navigate('Estimate', { status: 'estimate', active: false })}>
-              <Icon name="discourse" size={40} color="#aaa" solid />
+              <MaterialIcon name="business" size={40} color="#aaa" solid />
               <Text style={{ fontSize: 12, color: "#aaa" }}>Estimate</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.partInactiveContainer}>
             <TouchableOpacity style={styles.buttonInactiveView3} onPress={() => this.props.navigation.navigate('Estimate', { status: 'current', active: false })}>
-              <Icon name="servicestack" size={40} color="#aaa" solid />
+              <Icon name="briefcase" size={40} color="#aaa" solid />
               <Text style={{ fontSize: 12, color: "#aaa" }}>Current</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonInactiveView4} onPress={() => this.props.navigation.navigate('Estimate', { status: 'complete', active: false })}>
-              <Icon name="check" size={40} color="#aaa" solid />
+              <MaterialIcon name="check" size={40} color="#aaa" solid />
               <Text style={{ fontSize: 12, color: "#aaa" }}>Complete</Text>
             </TouchableOpacity>
           </View>

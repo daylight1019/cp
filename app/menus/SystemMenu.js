@@ -200,6 +200,7 @@ export default class SystemMenu extends Component {
           </View>
           <Text style={styles.name}>Log out</Text>
         </TouchableOpacity>
+        <View style={{height:30}}></View>
       </ScrollView>
     );
   }

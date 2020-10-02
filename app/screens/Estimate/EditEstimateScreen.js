@@ -235,7 +235,8 @@ class EditEstimateScreen extends Component {
         });
         this.uploadImageData = {}
         this.uploadImageData.projectid = this.state.project.id
-        this.uploadImageData.image = response.data;
+        this.uploadImageData.image = response.data
+        console.log("Upload Image", JSON.stringify(this.uploadImageData))
         this.props.fetchUploadImage(this.uploadImageData)
         if (this.props.uploadImageSuccess) alert("Image uploaded successfully.")
         else alert("Image upload failed.")
@@ -431,8 +432,9 @@ class EditEstimateScreen extends Component {
                   <Text style={{ ...styles.buttonText, marginLeft: -10 }}>Systems</Text>
                 </TouchableOpacity>
                 {this._renderSystem()}
-                <TouchableOpacity onPress={() => this.toggleImage()} style={{ ...styles.buttonView, backgroundColor: "rgb(51,122,183)", borderRadius: 10 }}>
-                  <Text style={{ ...styles.buttonText, marginLeft: 20 }}>Image</Text>
+                <TouchableOpacity onPress={() => this.toggleImage()} style={{ ...styles.buttonView, backgroundColor: this.state.imageOpen ? "rgb(236,151,31)" : "rgb(51,122,183)" }}>
+                  {this.state.imageOpen ? <Icon name="minus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid /> : <Icon name="plus-circle" style={{ margin: 8 }} size={16} color="#ffffff" solid />}
+                  <Text style={{ ...styles.buttonText, marginLeft: -10 }}>Image</Text>
                 </TouchableOpacity>
               </ScrollView>
             </View>

@@ -21,6 +21,7 @@ import {
   PROJECT_SUCCESS, PROJECT_ERROR,
   PROJECTDETAIL_SUCCESS, PROJECTDETAIL_ERROR,
   UPLOADIMAGE_SUCCESS, UPLOADIMAGE_ERROR,
+  GET_IMAGE_SUCCESS, GET_IMAGE_ERROR,
 
   NOTE_ERROR, NOTE_SUCCESS,
   ADD_NOTE_ERROR, ADD_NOTE_SUCCESS,
@@ -557,6 +558,30 @@ export const uploadImage = (param) => {
       .catch(err => {
         return dispatch({
           type: UPLOADIMAGE_ERROR,
+        })
+      })
+  };
+};
+
+export const getImageList = (param) => {
+  return (dispatch, getStore) => {
+    const channel = new Channel()
+    return channel.getImageListFromApi(param)
+      .then(data => {
+        if ((data == null) || data.errors) {
+          return dispatch({
+            type: GET_IMAGE_ERROR,
+          });
+        } else {
+          return dispatch({
+            type: GET_IMAGE_SUCCESS,
+            data: data,
+          });
+        }
+      })
+      .catch(err => {
+        return dispatch({
+          type: GET_IMAGE_ERROR,
         })
       })
   };

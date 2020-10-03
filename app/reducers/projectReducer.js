@@ -11,8 +11,11 @@ import {
   NOTE_SUCCESS,
   ADD_NOTE_SUCCESS,
   UPDATE_NOTE_SUCCESS,
+  UPDATE_NOTE_ERROR,
   UPLOADIMAGE_SUCCESS,
-  UPLOADIMAGE_ERROR, UPDATE_NOTE_ERROR
+  UPLOADIMAGE_ERROR,
+  GET_IMAGE_SUCCESS,
+  GET_IMAGE_ERROR,
 } from '../constants/action-types';
 
 const initialState = {
@@ -96,6 +99,13 @@ const projectReducer = (state = initialState, action: Object) => {
         isLoading: true,
         error: false,
         projectsInfo: state.projectsInfo.map(project => project.id == parseData.projectid ? { ...project, notes: project.notes.map(note => note.id == parseData.id ? parseData : note) } : project)
+      }
+    }
+    case GET_IMAGE_SUCCESS: {
+      return {
+        isLoading: true,
+        error: false,
+        projectsInfo: state.projectsInfo.map(project => ({ ...project, images: parseData }))
       }
     }
     case UPDATE_NOTE_SUCCESS: {

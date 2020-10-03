@@ -1,7 +1,8 @@
 'use strict'
 
 // const BASE_URL = 'http://192.168.109.231:8000/api/'
-const BASE_URL = 'http://dev.myincredibleone.com/api/'
+// const BASE_URL = 'http://dev.myincredibleone.com/api/'
+const BASE_URL = 'http://192.168.109.234:8000/api/'
 
 const address = {
 	baseUrl: () => {
@@ -110,6 +111,10 @@ const address = {
 
 	uploadImage: () => {
 		return BASE_URL + 'project/image'
+	},
+
+	getImageList: (projectId) => {
+		return BASE_URL + 'project/image/list/' + projectId
 	},
 
 	addNote: () => {

@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { getProjectSelector } from '../../reducers/projectReducer';
 import { getSystemSelector } from '../../reducers/systemReducer'
 import { getSystems, getSystem } from '../../actions/settings';
-import { getProjects, getOneProjectDetail, updateLeadDetail, updatePerson, updateProject, uploadImage, getNoteList, addNote, updateNote } from '../../actions/lead';
+import { getProjects, getOneProjectDetail, updateLeadDetail, updatePerson, updateProject, uploadImage, getNoteList, addNote, updateNote, getImageList } from '../../actions/lead';
 import { connect } from 'react-redux';
 import TextInput from 'react-native-textinput-with-icons'
 import { Picker } from '@react-native-community/picker';
@@ -169,8 +169,9 @@ class EditEstimateScreen extends Component {
 
     await this.props.fetchProjectDetail(this.state.project.id);
     await this.props.fetchGetNotes(this.state.project.id);
+    await this.props.fetchGetImageList(this.state.project.id);
     this.setState({ project: this.props.projectsInfo.filter(x => x.id == this.state.project.id)[0] });
-
+    console.log(JSON.stringify(this.state.project))
     this.setState({
       projectDetails: this.state.project.projectdetails,
       projectStatus: this.state.project.projectstatus,
@@ -235,8 +236,13 @@ class EditEstimateScreen extends Component {
         });
         this.uploadImageData = {}
         this.uploadImageData.projectid = this.state.project.id
-        this.uploadImageData.image = response.data
-        console.log("Upload Image", JSON.stringify(this.uploadImageData))
+        var photo = {
+          uri: response.uri, //'data:image/jpeg;base64,' + response.data,
+          type: 'image/jpeg',
+          name: 'photo.jpg',
+        };
+        this.uploadImageData.image = photo
+        console.log("UploadImage", JSON.stringify(this.uploadImageData))
         this.props.fetchUploadImage(this.uploadImageData)
         if (this.props.uploadImageSuccess) alert("Image uploaded successfully.")
         else alert("Image upload failed.")
@@ -512,6 +518,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchGetNotes: (id) => dispatch(getNoteList(id)),
   fetchAddNote: (param) => dispatch(addNote(param)),
   fetchUpdateNote: (param) => dispatch(updateNote(param)),
+  fetchGetImageList: (param) => dispatch(getImageList(param)),
 });
 
 export default connect(

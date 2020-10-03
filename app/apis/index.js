@@ -11,7 +11,7 @@ export default class Channel {
     return fetch(address.login(), {
       method: 'POST',
       headers: {
-        'Accept': 'application/json, text/plain, */*',
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email: email, password: pwd })
@@ -1012,15 +1012,40 @@ export default class Channel {
 
   async uploadImageFromApi(param) {
     var token = await getToken();
+    let imageFormData = new FormData();
 
+    imageFormData.append("projectid", param.projectid)
+    imageFormData.append("image", param.image)
+    
     return fetch(address.uploadImage(), {
       method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ' + token
+      },
+      body: imageFormData
+    })
+      .then(response => response.text())
+      .then((data) => {
+        console.log("Upload Image Result", data)
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Upload Image Error" + error)
+        return null;
+      });
+  }
+
+  async getImageListFromApi(projectId) {
+    var token = await getToken();
+    return fetch(address.getImageList(projectId), {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify(param)
+      }
     })
       .then(response => response.text())
       .then((data) => {
@@ -1028,7 +1053,7 @@ export default class Channel {
         return data;
       })
       .catch((error) => {
-        console.log("------------- Upload Image Error" + error)
+        console.log("------------- Get Image Error" + error)
         return null;
       });
   }

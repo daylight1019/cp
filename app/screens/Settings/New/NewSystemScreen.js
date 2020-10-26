@@ -94,7 +94,7 @@ class NewSystemScreen extends Component {
     });
   }
 
-  onSave = () => {
+  onSave = async () => {
     var sendParam = {
       name: this.state.systemName,
       saleprice: this.state.systemPrice,
@@ -111,7 +111,8 @@ class NewSystemScreen extends Component {
       }
     })
     console.log('sendParam', JSON.stringify(sendParam));
-    this.props.fetchAddSystems(sendParam);
+    await this.props.fetchAddSystems(sendParam);
+    this.props.navigation.navigate("System");
   }
 
   _renderIngredient = () => {

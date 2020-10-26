@@ -9,6 +9,7 @@ import {
   Switch,
   TouchableOpacity,
   Animated,
+  KeyboardAvoidingView,
   Platform,
   ActionSheetIOS
 } from 'react-native';
@@ -185,27 +186,33 @@ class EditLeadScreen extends Component {
     })
 
     this.lead = this.props.route.params.lead;
+    if (this.lead.id == undefined)
+      await this.props.fetchGetLead(this.lead.person.leadid);
+    else
+      await this.props.fetchGetLead(this.lead.id);
 
-    console.log("This.lead", JSON.stringify(this.lead))
+    this.oneLeadInfo = this.props.leadsInfo.filter(lead => lead.id == this.lead.id)[0];
+    console.log("This.Lead", JSON.stringify(this.lead))
+    console.log("This.OneLeadInfo", JSON.stringify(this.oneLeadInfo))
+    this.leadDetailId = this.oneLeadInfo.leaddetail.id;
 
-    await this.props.fetchGetLead(this.lead.id);
-    this.leadDetailId = this.props.oneLeadInfo.leaddetail.id;
-    this.personId = this.props.oneLeadInfo.person.id;
-    this.detail = this.props.oneLeadInfo.leaddetail.id;
-    this.setState({ firstName: this.props.oneLeadInfo.person.firstname });
-    this.setState({ lastName: this.props.oneLeadInfo.person.lastname });
-    this.setState({ company: this.props.oneLeadInfo.person.company });
+    this.personId = this.oneLeadInfo.person.id;
+    this.detail = this.oneLeadInfo.leaddetail.id;
 
-    this.setState({ email: this.props.oneLeadInfo.leaddetail.email });
-    this.setState({ callTime: this.props.oneLeadInfo.leaddetail.besttimetocall });
-    this.setState({ aboutUs: this.props.oneLeadInfo.leaddetail.hearaboutus });
-    this.setState({ helpText: this.props.oneLeadInfo.leaddetail.howcanwehelp });
+    this.setState({ firstName: this.oneLeadInfo.person.firstname });
+    this.setState({ lastName: this.oneLeadInfo.person.lastname });
+    this.setState({ company: this.oneLeadInfo.person.company });
 
-    if (this.props.oneLeadInfo.phone.length > 0) {
-      this.setState({ phoneList: this.props.oneLeadInfo.phone })
+    this.setState({ email: this.oneLeadInfo.leaddetail.email });
+    this.setState({ callTime: this.oneLeadInfo.leaddetail.besttimetocall });
+    this.setState({ aboutUs: this.oneLeadInfo.leaddetail.hearaboutus });
+    this.setState({ helpText: this.oneLeadInfo.leaddetail.howcanwehelp });
+
+    if (this.oneLeadInfo.phone.length > 0) {
+      this.setState({ phoneList: this.oneLeadInfo.phone })
     }
-    if (this.props.oneLeadInfo.address.length > 0) {
-      this.setState({ addressList: this.props.oneLeadInfo.address })
+    if (this.oneLeadInfo.address.length > 0) {
+      this.setState({ addressList: this.oneLeadInfo.address })
     }
     if (this.props.statesInfo != undefined) {
       this.setState({
@@ -326,7 +333,7 @@ class EditLeadScreen extends Component {
   _renderPhone = () => {
     if (this.state.phoneOpen) {
       return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
           <View style={{ marginTop: 10 }}>
             <TextInput
               style={styles.textInput}
@@ -389,7 +396,7 @@ class EditLeadScreen extends Component {
             </View>)
           )}
           <View style={{ height: 20 }}></View>
-        </View>
+        </KeyboardAvoidingView>
       );
     }
   }
@@ -397,7 +404,7 @@ class EditLeadScreen extends Component {
   _renderAddress = () => {
     if (this.state.addressOpen) {
       return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
           <View style={{ marginTop: 10 }}>
             <TextInput
               style={styles.textInput}
@@ -507,7 +514,7 @@ class EditLeadScreen extends Component {
             </View>)
           )}
           <View style={{ height: 5 }}></View>
-        </View>
+        </KeyboardAvoidingView>
       );
     }
   }
@@ -529,7 +536,7 @@ class EditLeadScreen extends Component {
 
           </View>
           :
-          <View style={styles.container}>
+          <KeyboardAvoidingView style={styles.container}>
             <ScrollView>
 
               <View style={styles.container}>
@@ -576,7 +583,7 @@ class EditLeadScreen extends Component {
                 <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
                   <Text>Best time to call</Text>
                   {Platform.OS === 'ios' ?
-                    <Button title={this.state.callTime == '' ? 'Not Selected' : this.state.callTime} onPress={() =>
+                    <Button title={this.state.callTime == '' || this.state.callTime == null ? 'Not Selected' : this.state.callTime} onPress={() =>
                       ActionSheetIOS.showActionSheetWithOptions(
                         {
                           options: this.state.callTimeArray
@@ -636,7 +643,7 @@ class EditLeadScreen extends Component {
               </TouchableOpacity>
               {this._renderAddress()}
             </ScrollView>
-          </View>
+          </KeyboardAvoidingView>
         }
       </SideMenu>
     )

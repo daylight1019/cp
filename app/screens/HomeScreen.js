@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Animated
 } from 'react-native';
-import { StackAction, NavigationActions } from 'react-navigation'
 import SideMenu from 'react-native-side-menu';
 import SystemMenu from '../menus/SystemMenu';
 import Icon from 'react-native-vector-icons/FontAwesome5';

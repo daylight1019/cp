@@ -112,18 +112,19 @@ class EstimateSystemScreen extends Component {
   }
 
   async loadData() {
+    console.log(this.detail.systemid)
     this.props.fetchGetColors();
     this.props.fetchGetPatterns();
     this.props.fetchGetSystem();
     if (this.detail.systemid == undefined) this.detail.systemid = this.props.systemsInfo[0].id
     this.props.fetchGetOneSystem(this.detail.systemid);
+    
     await this.props.fetchGetIngredient();
 
     this.systemList = this.props.systemsInfo;
     this.systemList.map(x => {
       this.setState({ systemPickerData: this.state.systemPickerData.concat({ label: x.name, value: x.id }) })
     })
-    console.log("systemId", this.detail.systemid)
     await this.loadIngredientBySystem(this.detail.systemid)
 
     this.setState({
@@ -153,7 +154,7 @@ class EstimateSystemScreen extends Component {
     const tempPatternsList = new Array(this.props.ingredientsInfo.length).fill([]);
     const tempSelectedColorList = new Array(this.props.ingredientsInfo.length).fill('');
     const tempSelectedPatternList = new Array(this.props.ingredientsInfo.length).fill('');
-    console.log("This.system", JSON.stringify(this.system));
+    
     if (this.system.ingredients != undefined) {
       this.system.ingredients.map((x, i) => {
         this.props.ingredientsInfo.map((y, j) => {
@@ -174,7 +175,7 @@ class EstimateSystemScreen extends Component {
         })
       })
     }
-    console.log("tempSelectedColorList", tempSelectedColorList);
+    
     this.setState({
       itemsState: tempItemState,
       checkState: tempCheckState,

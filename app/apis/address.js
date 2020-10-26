@@ -1,8 +1,8 @@
 'use strict'
 
 // const BASE_URL = 'http://192.168.109.231:8000/api/'
-// const BASE_URL = 'http://dev.myincredibleone.com/api/'
-const BASE_URL = 'http://192.168.109.234:8000/api/'
+const BASE_URL = 'http://dev.myincredibleone.com/api/'
+// const BASE_URL = 'http://192.168.109.234:8000/api/'
 
 const address = {
 	baseUrl: () => {
@@ -132,6 +132,14 @@ const address = {
 	getProjectByStatus: (status) => {
 		return BASE_URL + 'project/getprojectsbystatus/' + status
 	},
+
+	getCalendarList: () => {
+		return BASE_URL + 'calendars'
+	},
+
+	addCalendar: () => {
+		return BASE_URL + 'calendar'
+	}
 
 }
 

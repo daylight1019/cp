@@ -64,12 +64,12 @@ const leadReducer = (state = initialState, action: Object) => {
       };
     }
     case ONE_LEAD_SUCCESS: {
+      console.log(ONE_LEAD_SUCCESS, action.data)
       return {
         ...state,
         isLoading: false,
         error: false,
-        oneLeadInfo: parseData,
-        leadsInfo: state.leadsInfo
+        leadsInfo: state.leadsInfo.map(lead => lead.id == parseData.lead.id ? { ...parseData, id: lead.id } : lead)
       };
     }
     case ADD_LEAD_SUCCESS: {
@@ -77,7 +77,7 @@ const leadReducer = (state = initialState, action: Object) => {
         ...state,
         isLoading: false,
         error: false,
-        leadsInfo: state.leadsInfo.concat({ person: parseData }),
+        leadsInfo: state.leadsInfo.concat({ person: parseData, active: true }),
       };
     }
     case ADD_PERSON_SUCCESS: {
@@ -85,7 +85,7 @@ const leadReducer = (state = initialState, action: Object) => {
         ...state,
         isLoading: false,
         error: false,
-        leadsInfo: state.leadsInfo.concat({ person: parseData }),
+        leadsInfo: state.leadsInfo.concat({ person: parseData, active: true }),
       };
     }
     case ADD_PHONE_SUCCESS: {
@@ -109,7 +109,7 @@ const leadReducer = (state = initialState, action: Object) => {
         ...state,
         isLoading: false,
         error: false,
-        leadsInfo: state.leadsInfo.map(lead => (lead.person.id == parseData.personid ? { ...lead, leaddetail: parseData } : lead)),
+        leadsInfo: state.leadsInfo.map(lead => (lead.person.leadid == parseData.leadid ? { ...lead, leaddetail: parseData } : lead)),
       };
     }
     case ADD_PROJECT_SUCCESS: {

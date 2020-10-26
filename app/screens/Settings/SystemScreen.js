@@ -55,7 +55,7 @@ class SystemScreen extends Component {
     this.props.navigation.setOptions({
       headerRight: (props) => (
         <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewSystem')} >
-          <Icon name="user-plus" style={{ marginRight: 12 }} size={18} color="#ffffff" solid />
+          <Icon name="plus" style={{ marginRight: 18 }} size={18} color="#ffffff" solid />
         </TouchableOpacity>
       ),
       headerLeft: (props) => (

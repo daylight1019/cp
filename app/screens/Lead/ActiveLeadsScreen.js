@@ -57,7 +57,7 @@ class ActiveLeadsScreen extends Component {
       this.props.navigation.setOptions({
         headerRight: (props) => (
           <TouchableOpacity activeOpacity={.5} onPress={() => this.props.navigation.navigate('NewLead', { active: this.state.isActive })} >
-            <Icon name="user-plus" style={{ marginRight: 12 }} size={18} color="#ffffff" solid />
+            <Icon name="plus" style={{ marginRight: 18 }} size={18} color="#ffffff" solid />
           </TouchableOpacity>
 
         ),
@@ -82,7 +82,6 @@ class ActiveLeadsScreen extends Component {
 
   async loadData() {
     await this.props.fetchLead();
-    console.log(JSON.stringify(this.props.leadsInfo))
     this.setState({ isLoading: false })
   }
 

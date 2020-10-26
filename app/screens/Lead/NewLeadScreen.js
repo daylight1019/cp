@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Animated,
   Platform,
+  KeyboardAvoidingView,
   ActionSheetIOS
 } from 'react-native';
 
@@ -105,7 +106,7 @@ class NewLeadScreen extends Component {
       company: this.state.company,
       personid: this.personId
     }
-    await this.props.fetchAddLead(this.newleadInfo);
+    await this.props.fetchAddPerson(this.newleadInfo);
 
     this.personId = this.props.leadsInfo[this.props.leadsInfo.length - 1].person.id;
     this.leadId = this.props.leadsInfo[this.props.leadsInfo.length - 1].person.leadid;
@@ -160,7 +161,8 @@ class NewLeadScreen extends Component {
       this.projectDetailInfo.projectdetails.push(thisSystem);
     })
 
-    await this.props.fetchAddProjectDetail(this.projectDetailInfo);
+    if (this.projectDetailInfo.length > 0)
+      await this.props.fetchAddProjectDetail(this.projectDetailInfo);
 
     this.props.navigation.navigate("ActiveLeads");
   }
@@ -361,7 +363,7 @@ class NewLeadScreen extends Component {
   _renderDetail = () => {
     if (this.state.detailOpen) {
       return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
           <View style={{ marginTop: 10 }}>
             <TextInput
               style={styles.textInput}
@@ -455,7 +457,7 @@ class NewLeadScreen extends Component {
               defaultValue={this.state.helpText}
             />
           </View>
-        </View >
+        </KeyboardAvoidingView>
       );
     }
   }
@@ -463,7 +465,7 @@ class NewLeadScreen extends Component {
   _renderAddress = () => {
     if (this.state.addressOpen) {
       return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
           <View style={{ marginTop: 10 }}>
             <TextInput
               style={styles.textInput}
@@ -549,7 +551,7 @@ class NewLeadScreen extends Component {
                 )}
               </Picker>}
           </View>
-        </View>
+        </KeyboardAvoidingView>
       );
     }
   }

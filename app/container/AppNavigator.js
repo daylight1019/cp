@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { Image, Easing, Animated, StyleSheet } from 'react-native';
+import { Image, Easing, Animated, StyleSheet, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import SplashScreen from '../screens/SplashScreen';
@@ -42,44 +42,44 @@ const AppNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name="Splash" component={SplashScreen} options={{ title: "Splash", headerShown: false }} />
       <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login', headerShown: false }} />
-      <Stack.Screen name="Register" component={RegisterScreen} options={{ 
+      <Stack.Screen name="Register" component={RegisterScreen} options={{
         title: 'Register',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white',
       }} />
       <Stack.Screen name="Home" component={HomeScreen} options={{
         title: 'Home',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white',
       }} />
       <Stack.Screen name="ActiveLeads" component={ActiveLeadsScreen} options={{
         title: 'Leads',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="System" component={SystemScreen} options={{
         title: 'System',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="ContractTemplate" component={ContractTemplateScreen} options={{
         title: 'Contracts Template',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Calendar" component={CalendarScreen} options={{
         title: 'Calendar',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{
         title: 'Change Password',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Color" component={ColorScreen} options={{
         title: 'Color',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Feedback" component={FeedbackScreen} options={{
@@ -89,108 +89,108 @@ const AppNavigator = () => {
       }} />
       <Stack.Screen name="Ingredient" component={IngredientScreen} options={{
         title: 'Ingredient',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Pattern" component={PatternScreen} options={{
         title: 'Pattern',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} options={{
         title: 'Privacy Policy',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Purchase" component={PurchaseScreen} options={{
         title: 'Purchase',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Term" component={TermScreen} options={{
         title: 'Terms & Conditions',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewLead" component={NewLeadScreen} options={{
         title: 'New Lead',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewColor" component={NewColorScreen} options={{
         title: 'New Color',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewContractTemplate" component={NewContractTemplateScreen} options={{
         title: 'New Contract Template',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewIngredient" component={NewIngredientScreen} options={{
         title: 'New Ingredient',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewPattern" component={NewPatternScreen} options={{
         title: 'New Pattern',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="NewSystem" component={NewSystemScreen} options={{
         title: 'New System',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EditColor" component={EditColorScreen} options={{
         title: 'Edit Color',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EditPattern" component={EditPatternScreen} options={{
         title: 'Edit Pattern',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EditIngredient" component={EditIngredientScreen} options={{
         title: 'Edit Ingredient',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EditSystem" component={EditSystemScreen} options={{
         title: 'Edit System',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EditLead" component={EditLeadScreen} options={{
         title: 'Edit Lead',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="Estimate" component={EstimateScreen} options={{
         title: 'Estimate',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EditEstimate" component={EditEstimateScreen} options={{
         title: 'Edit Estimate',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
       <Stack.Screen name="EstimateSystem" component={EstimateSystemScreen} options={{
         title: 'Edit Estimate System',
-        headerTitleStyle:styles.headerTitle,
+        headerTitleStyle: styles.headerTitle,
         headerTintColor: 'white'
       }} />
     </Stack.Navigator>
   </NavigationContainer>
-  
+
   return navigation;
 }
 
 const styles = StyleSheet.create({
-  headerTitle: { 
-    textAlign: 'center', 
+  headerTitle: {
+    textAlign: 'center',
     height: 30,
     // marginLeft:-50
   }

@@ -201,6 +201,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        
         data = this.checkJSON(data);
         return data;
       })
@@ -550,7 +551,7 @@ export default class Channel {
         return data;
       })
       .catch((error) => {
-        console.log("------------- Add Person Error" + error)
+        console.log("------------- Add Lead Error" + error)
         return null;
       });
   }
@@ -574,7 +575,7 @@ export default class Channel {
         return data;
       })
       .catch((error) => {
-        console.log("------------- Add Person Error" + error)
+        console.log("------------- Add Phone Error" + error)
         return null;
       });
   }
@@ -598,7 +599,7 @@ export default class Channel {
         return data;
       })
       .catch((error) => {
-        console.log("------------- Add Person Error" + error)
+        console.log("------------- Add Address Error" + error)
         return null;
       });
   }
@@ -622,7 +623,7 @@ export default class Channel {
         return data;
       })
       .catch((error) => {
-        console.log("------------- Add Person Error" + error)
+        console.log("------------- Add Lead Detail Error" + error)
         return null;
       });
   }
@@ -753,7 +754,7 @@ export default class Channel {
   async updateLeadFromApi(lead) {
     var param = lead;
     var token = await getToken();
-    console.log("=======================updateLeadFromApi");
+    console.log("=======================updateLeadFromApi", JSON.stringify(lead));
 
     return fetch(address.addLead() + '/' + param.id, {
       method: 'PUT',
@@ -1001,6 +1002,7 @@ export default class Channel {
     })
       .then(response => response.text())
       .then((data) => {
+        console.log(data)
         data = this.checkJSON(data);
         return data;
       })
@@ -1016,7 +1018,7 @@ export default class Channel {
 
     imageFormData.append("projectid", param.projectid)
     imageFormData.append("image", param.image)
-    
+
     return fetch(address.uploadImage(), {
       method: 'POST',
       headers: {
@@ -1075,6 +1077,93 @@ export default class Channel {
       })
       .catch((error) => {
         console.log("------------- Get State Error" + error)
+        return null;
+      });
+  }
+
+  async getCalendarListFromApi() {
+    var token = await getToken();
+    return fetch(address.getCalendarList(), {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then(response => response.text())
+      .then((data) => {
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Get Calendar Error" + error)
+        return null;
+      });
+  }
+
+  async addCalendarFromApi(param) {
+    console.log(JSON.stringify(param))
+    var token = await getToken();
+    return fetch(address.addCalendar(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(param)
+    })
+      .then(response => response.text())
+      .then((data) => {
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Add Calendar Error" + error)
+        return null;
+      });
+  }
+
+  async updateCalendarFromApi(param) {
+    var token = await getToken();
+    return fetch(address.addCalendar() + '/' + param.id, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(param)
+    })
+      .then(response => response.text())
+      .then((data) => {
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Update Calendar Error" + error)
+        return null;
+      });
+  }
+
+  async removeCalendarFromApi(param) {
+    var token = await getToken();
+    return fetch(address.addCalendar() + '/' + param.id, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then(response => response.text())
+      .then((data) => {
+        data = this.checkJSON(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("------------- Delete Calendar Error" + error)
         return null;
       });
   }

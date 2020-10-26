@@ -200,7 +200,7 @@ class EditEstimateScreen extends Component {
     });
   }
 
-  toggleImage = () => {
+  toggleImage = async () => {
     this.setState({
       imageOpen: !this.state.imageOpen,
     });
@@ -216,7 +216,7 @@ class EditEstimateScreen extends Component {
       },
     };
 
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(options, async (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -238,12 +238,12 @@ class EditEstimateScreen extends Component {
         this.uploadImageData.projectid = this.state.project.id
         var photo = {
           uri: response.uri, //'data:image/jpeg;base64,' + response.data,
+          // uri: Platform.OS=='ios'?response.uri.replace("file://", "/private"):response.uri, //response.uri, //'data:image/jpeg;base64,' + response.data,
           type: 'image/jpeg',
           name: 'photo.jpg',
         };
         this.uploadImageData.image = photo
-        console.log("UploadImage", JSON.stringify(this.uploadImageData))
-        this.props.fetchUploadImage(this.uploadImageData)
+        await this.props.fetchUploadImage(this.uploadImageData)
         if (this.props.uploadImageSuccess) alert("Image uploaded successfully.")
         else alert("Image upload failed.")
       }

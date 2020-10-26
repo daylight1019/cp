@@ -13,6 +13,11 @@ import {
   ONE_SYSTEM_SUCCESS,
   ONE_SYSTEM_REQUEST,
   ONE_SYSTEM_ERROR,
+
+  CALENDAR_SUCCESS,
+  UPDATE_CALENDAR_SUCCESS,
+  ADD_CALENDAR_SUCCESS,
+  DELETE_CALENDAR_SUCCESS,
 } from '../constants/action-types';
 
 const initialState = {
@@ -23,17 +28,24 @@ const initialState = {
 
 export const getSystemSelector = (state) => ({ ...state.systemReducer });
 
-const systemReducer = (state = initialState, action:Object) => {
-  switch (action.type) { 
+const systemReducer = (state = initialState, action: Object) => {
+  var parseData;
+
+  if (action.data != undefined)
+    parseData = JSON.parse(action.data)
+
+  switch (action.type) {
     case SYSTEM_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        systemsInfo: JSON.parse(action.data),
+        systemsInfo: parseData,
       };
     }
     case SYSTEM_REQUEST: {
       return {
+        ...state,
         isLoading: true,
         error: false,
         systemsInfo: {},
@@ -48,9 +60,10 @@ const systemReducer = (state = initialState, action:Object) => {
     }
     case ADD_SYSTEM_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        systemsInfo: state.systemsInfo.concat(JSON.parse(action.data)),
+        systemsInfo: state.systemsInfo.concat(parseData),
       };
     }
     case ADD_SYSTEM_REQUEST: {
@@ -69,9 +82,10 @@ const systemReducer = (state = initialState, action:Object) => {
     }
     case UPDATE_SYSTEM_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        systemsInfo: state.systemsInfo.map((item, index) => (item.id == JSON.parse(action.data).id ? JSON.parse(action.data) : item))
+        systemsInfo: state.systemsInfo.map((item, index) => (item.id == parseData.id ? parseData : item))
       };
     }
     case UPDATE_SYSTEM_REQUEST: {
@@ -90,9 +104,10 @@ const systemReducer = (state = initialState, action:Object) => {
     }
     case ONE_SYSTEM_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         error: false,
-        systemsInfo: state.systemsInfo.map((item, index) => (item.id == JSON.parse(action.data).id ? JSON.parse(action.data) : item))
+        systemsInfo: state.systemsInfo.map((item, index) => (item.id == parseData.id ? parseData : item))
       };
     }
     case ONE_SYSTEM_REQUEST: {
@@ -107,6 +122,38 @@ const systemReducer = (state = initialState, action:Object) => {
         ...state,
         isLoading: false,
         error: true,
+      };
+    }
+    case CALENDAR_SUCCESS: {
+      return {
+        ...state,
+        calendarInfo: parseData,
+        isLoading: true,
+        error: false,
+      };
+    }
+    case ADD_CALENDAR_SUCCESS: {
+      return {
+        ...state,
+        calendarInfo: state.calendarInfo.concat(parseData),
+        isLoading: true,
+        error: false,
+      };
+    }
+    case UPDATE_CALENDAR_SUCCESS: {
+      return {
+        ...state,
+        calendarInfo: state.calendarInfo.map(x => x.id == parseData.id ? parseData : x),
+        isLoading: true,
+        error: false,
+      };
+    }
+    case DELETE_CALENDAR_SUCCESS: {
+      return {
+        ...state,
+        calendarInfo: state.calendarInfo.filter(x => x.id != parseData.id),
+        isLoading: true,
+        error: false,
       };
     }
     default: {

@@ -15,6 +15,7 @@ import {
   UPLOADIMAGE_SUCCESS,
   UPLOADIMAGE_ERROR,
   GET_IMAGE_SUCCESS,
+  UPDATE_PERSON_SUCCESS,
   GET_IMAGE_ERROR,
 } from '../constants/action-types';
 
@@ -32,6 +33,7 @@ const projectReducer = (state = initialState, action: Object) => {
   var newData;
   switch (action.type) {
     case PROJECT_SUCCESS: {
+      console.log(PROJECT_SUCCESS, action.data);
       return {
         isLoading: false,
         error: false,
@@ -103,22 +105,31 @@ const projectReducer = (state = initialState, action: Object) => {
     }
     case GET_IMAGE_SUCCESS: {
       return {
+        ...state,
         isLoading: true,
         error: false,
         projectsInfo: state.projectsInfo.map(project => ({ ...project, images: parseData }))
       }
     }
-    case UPDATE_NOTE_SUCCESS: {
+    case UPLOADIMAGE_SUCCESS: {
       return {
         ...state,
         uploadImageSuccess: true,
       }
     }
-    case UPDATE_NOTE_ERROR: {
+    case UPLOADIMAGE_ERROR: {
       return {
         ...state,
         uploadImageSuccess: false,
       }
+    }
+    case UPDATE_PERSON_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        projectsInfo: state.projectsInfo.map(project => (project.person.id == parseData.id ? { ...project, person: parseData } : project)),
+      };
     }
     default: {
       return state;

@@ -14,9 +14,8 @@ import SystemMenu from '../../menus/SystemMenu';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
-import { getPatterns, getColors, addIngredients } from '../../actions/settings';
-import { getColorSelector } from '../../reducers/colorReducer';
-import { getPatternSelector } from '../../reducers/patternReducer';
+import { getCalendar, addCalendar, updateCalendar, deleteCalendar } from '../../actions/lead';
+import { getSystemSelector } from '../../reducers/systemReducer';
 import CalendarPicker from 'react-native-calendar-picker';
 import TextInput from 'react-native-textinput-with-icons'
 
@@ -29,6 +28,8 @@ class CalendarScreen extends Component {
     this.state = {
       isOpen: false,
       currentDate: '',
+      jobText: '',
+      thisId: '',
       customDatesStyles: []
     };
   }
@@ -52,27 +53,68 @@ class CalendarScreen extends Component {
 
   async componentDidMount() {
     this.setState({ isLoading: true })
-
+    await this.props.fetchGetCalendar();
+    this.props.calendarInfo.map(x => {
+      var newDatesStyles = {
+        id: x.id,
+        date: x.activedate,
+        style: { backgroundColor: 'red' },
+        textStyle: { color: 'white' },
+        content: x.content
+      }
+      this.setState({ customDatesStyles: this.state.customDatesStyles.concat([newDatesStyles]) })
+    })
     this.setState({ isLoading: false })
   }
 
-  onSave = () => {
+  onSave = async () => {
     if (this.state.currentDate == '') return;
-    var newDatesStyles = {
-      date: this.state.currentDate.toString(),
-      style: { backgroundColor: 'red' },
-      textStyle: { color: 'white' }
+    var newContent = {
+      activedate: this.state.currentDate.toString(),
+      content: this.state.jobText
     }
-    this.setState({ customDatesStyles: this.state.customDatesStyles.concat([newDatesStyles]) })
+    var thisContent = this.state.customDatesStyles.filter(x => x.date == this.state.currentDate.toString());
+    if (thisContent.length > 0) {
+      newContent.id = thisContent[0].id
+      await this.props.fetchUpdateCalendar(newContent);
+    }
+    else {
+      await this.props.fetchAddCalendar(newContent);
+    }
+    this.setState({ customDatesStyles: [] })
+    this.props.calendarInfo.map(x => {
+      var newDatesStyles = {
+        id: x.id,
+        date: x.activedate,
+        style: { backgroundColor: 'red' },
+        textStyle: { color: 'white' },
+        content: x.content
+      }
+      this.setState({ customDatesStyles: this.state.customDatesStyles.concat([newDatesStyles]) })
+    })
   }
 
-  onRemove = () => {
+  onRemove = async () => {
     if (this.state.currentDate == '') return;
+    var sendParam = { id: this.state.thisId };
+    await this.props.fetchDeleteCalendar(sendParam);
     this.setState({ customDatesStyles: this.state.customDatesStyles.filter(x => x.date != this.state.currentDate.toString()) })
   }
 
   onClickDay = (date) => {
-    this.setState({ currentDate: date })
+    var newDate = new Date(date);
+    var stringDate = newDate.getFullYear() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getDate();
+    this.setState({ currentDate: stringDate })
+    var content = ""
+    var id = ""
+    var thisDateContent = this.state.customDatesStyles.filter(x => x.date == stringDate)
+    console.log(JSON.stringify(thisDateContent))
+    if (thisDateContent.length > 0) {
+      content = thisDateContent[0].content
+      id = thisDateContent[0].id
+    }
+    this.setState({ jobText: content })
+    this.setState({ thisId: id })
   }
 
   render() {
@@ -96,7 +138,7 @@ class CalendarScreen extends Component {
               customDatesStyles={this.state.customDatesStyles}
               onDateChange={date => this.onClickDay(date)}
             />
-            <TextInput style={{ ...styles.textInput, marginTop: 36 }} label="Job"></TextInput>
+            <TextInput style={{ ...styles.textInput, marginTop: 36 }} label="Job" value={this.state.jobText} onChangeText={text => this.setState({ jobText: text })}></TextInput>
             <View style={{ flexDirection: 'row', marginTop: 24 }}>
               <TouchableOpacity onPress={this.onSave} style={{ ...styles.buttonView, backgroundColor: "rgba(51,122,183,1.0)" }}>
                 <Text style={styles.buttonText}>Save</Text>
@@ -161,13 +203,14 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return { ...getColorSelector(state), ...getPatternSelector(state) }
+  return { ...getSystemSelector(state) }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchGetColor: () => dispatch(getColors()),
-  fetchGetPattern: () => dispatch(getPatterns()),
-  fetchAddIngredient: (param) => dispatch(addIngredients(param))
+  fetchGetCalendar: () => dispatch(getCalendar()),
+  fetchAddCalendar: (param) => dispatch(addCalendar(param)),
+  fetchDeleteCalendar: (param) => dispatch(deleteCalendar(param)),
+  fetchUpdateCalendar: (param) => dispatch(updateCalendar(param))
 });
 
 export default connect(

@@ -26,7 +26,11 @@ import {
   NOTE_ERROR, NOTE_SUCCESS,
   ADD_NOTE_ERROR, ADD_NOTE_SUCCESS,
   UPDATE_NOTE_ERROR, UPDATE_NOTE_SUCCESS,
-  STATE_SUCCESS, STATE_ERROR
+  STATE_SUCCESS, STATE_ERROR, 
+  CALENDAR_ERROR, CALENDAR_SUCCESS, 
+  UPDATE_CALENDAR_ERROR, UPDATE_CALENDAR_SUCCESS, 
+  ADD_CALENDAR_ERROR, ADD_CALENDAR_SUCCESS, 
+  DELETE_CALENDAR_SUCCESS, DELETE_CALENDAR_ERROR,
 } from '../constants/action-types'
 
 export const getLeadsList = () => {
@@ -58,6 +62,7 @@ export const getLead = (id) => {
     const channel = new Channel()
     return channel.getLeadFromApi(id)
       .then(data => {
+        console.log("GetLEad", JSON.stringify(data));
         if ((data == null) || data.errors) {
           return dispatch({
             type: ONE_LEAD_ERROR,
@@ -606,6 +611,102 @@ export const getState = () => {
       .catch(err => {
         return dispatch({
           type: STATE_ERROR,
+        })
+      })
+  };
+};
+
+export const getCalendar = () => {
+  return (dispatch, getStore) => {
+    const channel = new Channel()
+    return channel.getCalendarListFromApi()
+      .then(data => {
+        if ((data == null) || data.errors) {
+          return dispatch({
+            type: CALENDAR_ERROR,
+          });
+        } else {
+          return dispatch({
+            type: CALENDAR_SUCCESS,
+            data: data,
+          });
+        }
+      })
+      .catch(err => {
+        return dispatch({
+          type: CALENDAR_ERROR,
+        })
+      })
+  };
+};
+
+export const addCalendar = (param) => {
+  return (dispatch, getStore) => {
+    const channel = new Channel()
+    return channel.addCalendarFromApi(param)
+      .then(data => {
+        if ((data == null) || data.errors) {
+          return dispatch({
+            type: ADD_CALENDAR_ERROR,
+          });
+        } else {
+          return dispatch({
+            type: ADD_CALENDAR_SUCCESS,
+            data: data,
+          });
+        }
+      })
+      .catch(err => {
+        return dispatch({
+          type: ADD_CALENDAR_ERROR,
+        })
+      })
+  };
+};
+
+export const updateCalendar = (param) => {
+  return (dispatch, getStore) => {
+    const channel = new Channel()
+    return channel.updateCalendarFromApi(param)
+      .then(data => {
+        if ((data == null) || data.errors) {
+          return dispatch({
+            type: UPDATE_CALENDAR_ERROR,
+          });
+        } else {
+          return dispatch({
+            type: UPDATE_CALENDAR_SUCCESS,
+            data: data,
+          });
+        }
+      })
+      .catch(err => {
+        return dispatch({
+          type: UPDATE_CALENDAR_ERROR,
+        })
+      })
+  };
+};
+
+export const deleteCalendar = (param) => {
+  return (dispatch, getStore) => {
+    const channel = new Channel()
+    return channel.removeCalendarFromApi(param)
+      .then(data => {
+        if ((data == null) || data.errors) {
+          return dispatch({
+            type: DELETE_CALENDAR_ERROR,
+          });
+        } else {
+          return dispatch({
+            type: DELETE_CALENDAR_SUCCESS,
+            data: data,
+          });
+        }
+      })
+      .catch(err => {
+        return dispatch({
+          type: DELETE_CALENDAR_ERROR,
         })
       })
   };
